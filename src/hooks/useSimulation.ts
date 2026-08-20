@@ -5,7 +5,7 @@ import type {
   AuditLogEntry
 } from '../engine/types';
 import { runSimulation } from '../engine/simulationEngine';
-import { adjustSimulationWithLLM, enhanceSimulationWithAI } from '../engine/aiEnhancer';
+import { runLLMFirstSimulation } from '../engine/aiEnhancer';
 import { useLocalStorage } from './useLocalStorage';
 import preloadedStrategiesData from '../data/preloaded_strategies.json';
 
@@ -14,11 +14,11 @@ const preloadedStrategies = preloadedStrategiesData as CandidateStrategy[];
 const INITIAL_STRATEGY: CandidateStrategy = preloadedStrategies[0];
 
 const SIMULATION_STAGES = [
-  'Matching historical campaign priors across Unilever portfolio...',
-  'Evaluating regional sentiment volatility & cultural nuances...',
-  'Simulating 14-day reach trajectories with 90% confidence bands...',
-  'Running multi-agent guardrails (Brand Safety, Cultural & Legal IP)...',
-  'Synthesizing launch tier recommendation & stage-gate playbook...'
+  'Loading Mirror knowledge base from campaign data files...',
+  'Grounding NVIDIA Llama in comparable Unilever campaign evidence...',
+  'Reasoning about reach, response, and commercial outcomes...',
+  'Assessing cultural, brand-safety, and partnership risks...',
+  'Generating the launch tier and stage-gate recommendation...'
 ];
 
 export function useSimulation() {
@@ -33,38 +33,42 @@ export function useSimulation() {
     setIsLoading(true);
     setCurrentStageIndex(0);
 
-    // Realistic multi-stage animated progress to sell the AI computation experience
-    for (let i = 0; i < SIMULATION_STAGES.length; i++) {
-      setCurrentStageIndex(i);
-      await new Promise(resolve => setTimeout(resolve, 320));
+    try {
+      // Realistic multi-stage animated progress to sell the AI computation experience
+      for (let i = 0; i < SIMULATION_STAGES.length; i++) {
+        setCurrentStageIndex(i);
+        await new Promise(resolve => setTimeout(resolve, 320));
+      }
+
+      // LLM-first: NVIDIA Llama receives the campaign brief plus all JSON data
+      // files and produces the full assessment. Local rules are offline fallback only.
+      const llmAttempt = await runLLMFirstSimulation(targetStrat);
+      const finalResult = llmAttempt.simulation ?? {
+        ...runSimulation(targetStrat),
+        aiTrace: {
+          mode: 'fallback' as const,
+          model: 'Local deterministic fallback',
+          sourceFiles: [],
+          failureReason: llmAttempt.failureReason
+        }
+      };
+
+      setCurrentResult(finalResult);
+
+      // Record into Audit Trail
+      const newAuditEntry: AuditLogEntry = {
+        id: `audit-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+        timestamp: new Date().toISOString(),
+        strategy: targetStrat,
+        simulation: finalResult,
+        manualOverrides: []
+      };
+
+      setAuditHistory(prev => [newAuditEntry, ...prev.slice(0, 49)]); // Keep last 50 runs
+      return finalResult;
+    } finally {
+      setIsLoading(false);
     }
-
-    // 1. Run deterministic core simulation engine first.
-    const rawResult = runSimulation(targetStrat);
-
-    // 2. Apply optional LLM numeric adjustments.
-    //    The adjustment function caches the exact multipliers for identical inputs,
-    //    so repeated simulations remain stable after the first successful LLM call.
-    const adjustedResult = await adjustSimulationWithLLM(targetStrat, rawResult);
-
-    // 3. Generate the existing executive summary / KPI reasoning from the
-    //    final numeric result. If the LLM is unavailable, this falls back silently.
-    const finalResult = await enhanceSimulationWithAI(targetStrat, adjustedResult);
-
-    setCurrentResult(finalResult);
-    setIsLoading(false);
-
-    // Record into Audit Trail
-    const newAuditEntry: AuditLogEntry = {
-      id: `audit-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
-      timestamp: new Date().toISOString(),
-      strategy: targetStrat,
-      simulation: finalResult,
-      manualOverrides: []
-    };
-
-    setAuditHistory(prev => [newAuditEntry, ...prev.slice(0, 49)]); // Keep last 50 runs
-    return finalResult;
   }, [currentStrategy, setAuditHistory]);
 
   const acknowledgeGuardrailFlag = useCallback((

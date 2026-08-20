@@ -93,7 +93,7 @@ export const SimulationResults: React.FC<SimulationResultsProps> = ({
               {simulation.isAiEnhanced && (
                 <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800 border border-purple-200 flex items-center gap-1">
                   <Sparkles className="w-3 h-3 text-purple-600" />
-                  NVIDIA Llama-3.3 Enhanced
+                  NVIDIA Llama-3.3 Grounded Analysis
                 </span>
               )}
             </div>
@@ -158,6 +158,38 @@ export const SimulationResults: React.FC<SimulationResultsProps> = ({
           </div>
         </div>
       </div>
+
+      {/* AI provenance stays visible during demos and makes fallback explicit. */}
+      {simulation.aiTrace && (
+        <details className={`rounded-2xl border p-4 ${
+          simulation.aiTrace.mode === 'fallback'
+            ? 'bg-amber-50 border-amber-200'
+            : 'bg-purple-50 border-purple-200'
+        }`}>
+          <summary className="cursor-pointer list-none flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <Sparkles className={`w-4 h-4 ${simulation.aiTrace.mode === 'fallback' ? 'text-amber-600' : 'text-purple-600'}`} />
+              <span className="text-xs font-black uppercase tracking-wider text-slate-800">AI Analysis Trace</span>
+            </div>
+            <span className={`text-[10px] font-mono font-bold px-2 py-1 rounded-full ${
+              simulation.aiTrace.mode === 'fallback' ? 'bg-amber-100 text-amber-800' : 'bg-purple-100 text-purple-800'
+            }`}>
+              {simulation.aiTrace.mode === 'llm_first' ? 'LIVE NVIDIA LLM RESULT' : simulation.aiTrace.mode === 'llm_cache' ? 'CACHED NVIDIA LLM RESULT' : 'LOCAL FALLBACK — LLM NOT USED'}
+            </span>
+          </summary>
+          <div className="mt-3 pt-3 border-t border-slate-200/70 grid gap-2 text-xs text-slate-700">
+            <p><span className="font-bold">Model:</span> {simulation.aiTrace.model}</p>
+            {simulation.aiTrace.sourceFiles.length > 0 && <p><span className="font-bold">Grounded sources:</span> {simulation.aiTrace.sourceFiles.join(', ')}</p>}
+            {simulation.aiTrace.responseId && <p><span className="font-bold">NVIDIA response ID:</span> <span className="font-mono">{simulation.aiTrace.responseId}</span></p>}
+            {simulation.aiTrace.failureReason && <p className="text-amber-800"><span className="font-bold">Why LLM was skipped:</span> {simulation.aiTrace.failureReason}</p>}
+            <p className="text-slate-500">
+              {simulation.aiTrace.mode === 'fallback'
+                ? 'The displayed KPI explanations, guardrails, and launch recommendation came from the local deterministic fallback—not an LLM response.'
+                : 'KPI explanations, guardrails, and the launch recommendation are parsed from this LLM response. Cached results preserve the original LLM output for repeatable demos.'}
+            </p>
+          </div>
+        </details>
+      )}
 
       {/* 2. CORE METRICS GRID WITH INTERACTIVE (?) REASONING BUTTONS */}
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">

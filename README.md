@@ -30,7 +30,7 @@ Sense (Pulse) ──► Strategize (Compass) ──► [ Simulate (Mirror) ] ─
 
 ## 2. Core Simulation Logic & Defensible Mathematical Formulas
 
-Mirror uses an empirical, deterministic/probabilistic Bayesian simulation engine grounded in 45+ synthetic Unilever historical campaigns (`src/data/historical_campaigns.json`).
+Mirror is now **LLM-first**: NVIDIA Llama receives the candidate brief together with every JSON knowledge file in `src/data/` and produces the primary campaign assessment, risk review, KPI reasoning, and launch recommendation. The earlier deterministic engine remains only as an offline/API-failure fallback.
 
 ### 2.1 Multi-Attribute k-NN Similarity Prior
 Candidate strategies are matched against historical campaigns across 5 weighted dimensions:
@@ -81,11 +81,12 @@ Daily reach accumulation follows channel-specific Weibull decay curves:
 
 ## 4. Zero-Cost Client-Side Architecture
 
-Mirror requires **zero backend infrastructure, zero paid APIs, and zero ongoing hosting costs**:
+Mirror is client-side and uses the configured NVIDIA API key for its primary analysis:
 - **Framework**: React 19 + TypeScript + Vite
 - **Styling**: Tailwind CSS (Dark Enterprise Palette)
 - **Charts**: Recharts (Free, Canvas/SVG client-side rendering)
 - **Icons**: Lucide React
+- **LLM**: NVIDIA NIM via `meta/llama-3.3-70b-instruct`
 - **Hosting**: Static distribution hosted for free on GitHub Pages
 
 ---
@@ -105,11 +106,14 @@ cd mirror
 # 2. Install dependencies
 npm install
 
-# 3. Start local development server
+# 3. Add your NVIDIA NIM key (Vite exposes only VITE_-prefixed variables)
+echo 'NVIDIA_API_KEY=your_key_here' > .env
+
+# 4. Start local development server
 npm run dev
 ```
 
-The application will start at `http://localhost:5173`. Zero configuration, `.env` files, or API keys are required.
+The application will start at `http://localhost:5173`. The Vite development server proxies NVIDIA calls, so the browser does not hit NVIDIA directly and does not need CORS access. Without the key or when NVIDIA is unavailable, it falls back to the existing local deterministic simulator. A static GitHub Pages deployment needs an equivalent serverless proxy; it cannot make this protected NVIDIA request by itself.
 
 ---
 
@@ -155,7 +159,7 @@ Mirror/
 │   │   ├── simulationEngine.ts       # 14-day reach trajectories, sentiment & factor attribution
 │   │   ├── guardrailEngine.ts        # Brand safety, cultural compliance & IP scanner
 │   │   ├── recommendationEngine.ts   # Launch tier gating & stage-gate playbooks
-│   │   └── aiEnhancer.ts             # Seamless background AI bridge with client fallback
+│   │   └── aiEnhancer.ts             # NVIDIA Llama LLM-first assessment with local fallback
 │   ├── components/
 │   │   ├── common/                   # Header, Badge, Modal, LoadingOverlay
 │   │   ├── studio/                   # StrategyInputForm, SimulationResults, ReachVelocityChart,

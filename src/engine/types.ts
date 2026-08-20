@@ -180,6 +180,13 @@ export interface SimulationResult {
   executiveSummary: string;
   kpiReasoning: KpiReasoning;
   isAiEnhanced?: boolean;
+  aiTrace?: {
+    mode: 'llm_first' | 'llm_cache' | 'fallback';
+    model: string;
+    sourceFiles: string[];
+    responseId?: string;
+    failureReason?: string;
+  };
 }
 
 export interface AuditLogEntry {

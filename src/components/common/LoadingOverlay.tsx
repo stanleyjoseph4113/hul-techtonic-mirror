@@ -46,7 +46,7 @@ export const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ stageText, progr
         <div className="flex justify-between items-center text-xs text-slate-500 font-mono">
           <span className="flex items-center gap-1.5 font-semibold">
             <Activity className="w-3.5 h-3.5 text-sky-600" />
-            Deterministic Historical Engine
+            NVIDIA Llama LLM-first Analysis
           </span>
           <span className="text-sky-700 font-black">{progress}%</span>
         </div>
