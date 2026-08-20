@@ -10,7 +10,11 @@
     "channels": ["X", "TikTok", "Instagram"],
     "timelineUrgency": "immediate",
     "creativeAngle": "Viral clip of tense football referee sweating under pressure with Rexona logo visible on armband. Caption: 'Under maximum pressure? 72H protection won't let you down.'",
-    "rationale": "High organic momentum with over 2.4M live impressions in the last 2 hours. Fast, low-cost reactive play to capitalize on earned media."
+    "rationale": "High organic momentum with over 2.4M live impressions in the last 2 hours. Fast, low-cost reactive play to capitalize on earned media.",
+    "scheduledDate": "2026-08-22",
+    "timeWindow": "Matchday 2 - Champions League Play-off (8:00 PM GMT)",
+    "eventContext": "Live broadcast referee sweat moment trending #RefereeSweat on X.",
+    "culturalEventName": "Premier League & UEFA Matchday Spotlight"
   },
   {
     "id": "strat-dove-ai-beauty",
@@ -23,7 +27,11 @@
     "channels": ["Instagram", "TikTok", "OOH"],
     "timelineUrgency": "one_week",
     "creativeAngle": "Partnership with 25 authentic beauty creators pledging zero digital retouching and demonstrating how AI image generators create distorted beauty standards.",
-    "rationale": "Directly reinforces Dove's 20-year Real Beauty equity amidst mounting consumer anxiety over generative AI aesthetics."
+    "rationale": "Directly reinforces Dove's 20-year Real Beauty equity amidst mounting consumer anxiety over generative AI aesthetics.",
+    "scheduledDate": "2026-08-28",
+    "timeWindow": "Global AI Ethics & Mental Health Awareness Week",
+    "eventContext": "Upcoming Senate hearing and EU Commission debate on synthetic media disclosure.",
+    "culturalEventName": "UNICEF / Global Self-Esteem Summit"
   },
   {
     "id": "strat-knorr-ramadan-iftar",
@@ -36,7 +44,11 @@
     "channels": ["TikTok", "Instagram", "YouTube"],
     "timelineUrgency": "immediate",
     "creativeAngle": "High-speed video series with local creators creating comforting, nutrient-dense Iftar soups and stews in under 15 minutes during fasting month.",
-    "rationale": "Peak Ramadan grocery search volume (+340% for quick meal ideas) makes this a high-conversion, low-risk seasonal opportunity."
+    "rationale": "Peak Ramadan grocery search volume (+340% for quick meal ideas) makes this a high-conversion, low-risk seasonal opportunity.",
+    "scheduledDate": "2026-09-04",
+    "timeWindow": "Ramadan Pre-Sunset Hour (Daily 4:30 PM - 6:00 PM)",
+    "eventContext": "Mass grocery shopping surge ahead of festive weekend gatherings.",
+    "culturalEventName": "Ramadan Festive Culinary Season"
   },
   {
     "id": "strat-magnum-cannes-pop",
@@ -49,7 +61,11 @@
     "channels": ["Instagram", "TikTok", "OOH"],
     "timelineUrgency": "one_week",
     "creativeAngle": "Luxury street pop-up in high-fashion districts offering bespoke gold leaf and ruby chocolate dipped Magnum bars co-hosted by fashion week creators.",
-    "rationale": "Amplifies Magnum's premium indulgence positioning and drives high-aesthetic user-generated content (UGC) ripple across social feeds."
+    "rationale": "Amplifies Magnum's premium indulgence positioning and drives high-aesthetic user-generated content (UGC) ripple across social feeds.",
+    "scheduledDate": "2026-09-12",
+    "timeWindow": "Autumn Fashion Week Opening Gala (London & Milan)",
+    "eventContext": "VIP creator after-parties and street style photospots in Covent Garden & Brera.",
+    "culturalEventName": "European Autumn Haute-Couture Fashion Week"
   },
   {
     "id": "strat-hellmanns-game-day",
@@ -62,6 +78,10 @@
     "channels": ["TV", "TikTok", "X", "YouTube"],
     "timelineUrgency": "one_week",
     "creativeAngle": "Humorous multi-channel push showing game day hosts turning cold buffalo wings and stale pizza crusts into gourmet dips with Hellmann's mayo.",
-    "rationale": "Post-game day food waste is at an annual peak. Ties national sports excitement directly to Hellmann's 'Make Taste, Not Waste' mission."
+    "rationale": "Post-game day food waste is at an annual peak. Ties national sports excitement directly to Hellmann's 'Make Taste, Not Waste' mission.",
+    "scheduledDate": "2026-09-20",
+    "timeWindow": "NFL Kickoff Sunday Post-Game Tailgate (10:00 PM EST)",
+    "eventContext": "140,000 lbs of game day leftover food typically discarded on Monday morning.",
+    "culturalEventName": "National Football Season Opening Weekend"
   }
 ]

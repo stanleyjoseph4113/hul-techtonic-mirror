@@ -43,6 +43,11 @@ export interface CandidateStrategy {
   creativeAngle: string;
   rationale?: string;
   createdAt?: string;
+  // Calendar schedule attributes
+  scheduledDate?: string; // YYYY-MM-DD
+  timeWindow?: string;
+  eventContext?: string;
+  culturalEventName?: string;
 }
 
 export interface HistoricalCampaign {
@@ -105,6 +110,34 @@ export interface GuardrailFlag {
   overrideJustification?: string;
 }
 
+export interface KpiReasoning {
+  reach: {
+    formula: string;
+    explanation: string;
+    benchmark: string;
+  };
+  cpm: {
+    formula: string;
+    explanation: string;
+    benchmark: string;
+  };
+  roi: {
+    formula: string;
+    explanation: string;
+    benchmark: string;
+  };
+  engagement: {
+    formula: string;
+    explanation: string;
+    benchmark: string;
+  };
+  costPerInteraction: {
+    formula: string;
+    explanation: string;
+    benchmark: string;
+  };
+}
+
 export interface SimulationResult {
   strategyId: string;
   timestamp: string;
@@ -144,6 +177,7 @@ export interface SimulationResult {
   topInfluencingCampaigns: HistoricalCampaign[];
   factorDrivers: FactorDriver[];
   executiveSummary: string;
+  kpiReasoning: KpiReasoning;
   isAiEnhanced?: boolean;
 }
 

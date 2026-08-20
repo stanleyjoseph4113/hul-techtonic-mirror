@@ -1,17 +1,21 @@
-import { useState, useEffect } from 'react';
-import { useSimulation } from './hooks/useSimulation';
+import React, { useState } from 'react';
 import { Header } from './components/common/Header';
-import { LoadingOverlay } from './components/common/LoadingOverlay';
 import { StrategyInputForm } from './components/studio/StrategyInputForm';
 import { SimulationResults } from './components/studio/SimulationResults';
+import { LoadingOverlay } from './components/common/LoadingOverlay';
+import { CampaignCalendar } from './components/studio/CampaignCalendar';
 import { WhatIfArena } from './components/comparison/WhatIfArena';
 import { CalibrationDashboard } from './components/calibration/CalibrationDashboard';
 import { AuditTrail } from './components/audit/AuditTrail';
 import { AboutModal } from './components/modals/AboutModal';
+import { useSimulation } from './hooks/useSimulation';
+import type { AuditLogEntry } from './engine/types';
+import { Calendar, Sparkles } from 'lucide-react';
 
-export function App() {
+export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'studio' | 'comparison' | 'calibration' | 'audit'>('studio');
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(true);
 
   const {
     currentStrategy,
@@ -27,21 +31,14 @@ export function App() {
     deleteAuditEntry
   } = useSimulation();
 
-  // Run initial simulation on mount to immediately wow the viewer with pre-computed Rexona referee candidate
-  useEffect(() => {
-    if (!currentResult) {
-      runSim();
-    }
-  }, []);
-
-  const handleInspectAuditEntry = (entry: any) => {
+  const handleSelectAuditEntry = (entry: AuditLogEntry) => {
     setCurrentStrategy(entry.strategy);
     setActiveTab('studio');
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0B0F19] text-slate-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
-      {/* Top Navigation Header */}
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-sky-500/20 selection:text-sky-900 font-sans">
+      {/* Header */}
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -49,26 +46,60 @@ export function App() {
         historyCount={auditHistory.length}
       />
 
-      {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Active Tab Views */}
+      {/* Main Content Area */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-7">
         {activeTab === 'studio' && (
-          <div className="space-y-8">
-            {/* Strategy Input Configuration Panel */}
+          <div className="space-y-7">
+            {/* Cultural Calendar & Pulse Schedule Toggle */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-sky-600 animate-pulse" />
+                  <span className="text-xs font-black uppercase tracking-wider text-slate-700 font-mono">
+                    Cultural Moment Radar & Strategy Builder
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowCalendar(!showCalendar)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-sky-300 text-slate-700 hover:text-sky-700 text-xs font-bold transition-all shadow-2xs"
+                >
+                  <Calendar className="w-3.5 h-3.5 text-sky-600" />
+                  <span>{showCalendar ? 'Hide Cultural Schedule' : 'Show Cultural Schedule'}</span>
+                </button>
+              </div>
+
+              {showCalendar && (
+                <CampaignCalendar
+                  onSelectStrategy={setCurrentStrategy}
+                  currentStrategyId={currentStrategy.id}
+                />
+              )}
+            </div>
+
+            {/* Strategy Input Form (Top Half) */}
             <StrategyInputForm
               strategy={currentStrategy}
               onChange={setCurrentStrategy}
-              onSimulate={() => runSim(currentStrategy)}
+              onSimulate={() => { runSim(); }}
               isLoading={isLoading}
             />
 
-            {/* Simulation Results View */}
+            {/* Simulation Results (Bottom Half) */}
             {currentResult && (
-              <SimulationResults
-                strategy={currentStrategy}
-                simulation={currentResult}
-                onAcknowledgeFlag={acknowledgeGuardrailFlag}
-              />
+              <div className="pt-2">
+                <div className="flex items-center gap-2 mb-4">
+                  <Sparkles className="w-4 h-4 text-sky-600" />
+                  <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 font-mono">
+                    Live Simulation & Risk Analysis Output
+                  </h3>
+                </div>
+                <SimulationResults
+                  strategy={currentStrategy}
+                  simulation={currentResult}
+                  onAcknowledgeFlag={acknowledgeGuardrailFlag}
+                />
+              </div>
             )}
           </div>
         )}
@@ -80,14 +111,28 @@ export function App() {
         {activeTab === 'audit' && (
           <AuditTrail
             auditLog={auditHistory}
-            onSelectEntry={handleInspectAuditEntry}
+            onSelectEntry={handleSelectAuditEntry}
             onClearHistory={clearHistory}
             onDeleteEntry={deleteAuditEntry}
           />
         )}
       </main>
 
-      {/* Simulated Multi-Step AI Processing Screen */}
+      {/* Footer */}
+      <footer className="border-t border-slate-200 bg-white py-5 text-center text-xs text-slate-500">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div className="flex items-center gap-2 font-medium">
+            <span className="font-bold text-slate-800">Unilever Techtonic S8</span>
+            <span>•</span>
+            <span>Mirror: AI Simulation & Risk Engine</span>
+          </div>
+          <div className="text-[11px] text-slate-400 font-mono">
+            Zero-Cost Client-Side Architecture • Deterministic Prior Engine
+          </div>
+        </div>
+      </footer>
+
+      {/* Animated Loading Overlay */}
       {isLoading && (
         <LoadingOverlay
           stageText={simulationStageText}
@@ -95,35 +140,13 @@ export function App() {
         />
       )}
 
-      {/* About / Techtonic Context Modal */}
+      {/* About / Context Modal */}
       <AboutModal
         isOpen={isAboutOpen}
         onClose={() => setIsAboutOpen(false)}
       />
-
-      {/* Enterprise Footer */}
-      <footer className="border-t border-slate-900 bg-[#070A11] py-6 px-4 text-center text-xs text-slate-400">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-300">Mirror</span>
-            <span>•</span>
-            <span>Unilever Techtonic Season 8 Innovation Prototype</span>
-          </div>
-
-          <div className="flex items-center gap-4 text-[11px] text-slate-400">
-            <span>Zero-Cost Static Engine</span>
-            <span>•</span>
-            <button 
-              onClick={() => setIsAboutOpen(true)}
-              className="text-cyan-400 hover:underline"
-            >
-              Case Context & Model Math
-            </button>
-          </div>
-        </div>
-      </footer>
     </div>
   );
-}
+};
 
 export default App;

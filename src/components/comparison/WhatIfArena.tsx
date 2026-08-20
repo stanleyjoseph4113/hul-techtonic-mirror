@@ -84,23 +84,23 @@ export const WhatIfArena: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+      <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <GitCompare className="w-5 h-5 text-cyan-400" />
-              <h2 className="text-xl font-extrabold text-white tracking-tight">
+              <GitCompare className="w-5 h-5 text-sky-600" />
+              <h2 className="text-xl font-black text-slate-900 tracking-tight">
                 What-If Strategy Arena & Scenario Comparison
               </h2>
             </div>
-            <p className="text-xs text-slate-400 mt-1 max-w-2xl">
+            <p className="text-xs text-slate-500 mt-1 max-w-2xl">
               Evaluate trade-offs between reactive agility, paid scale, and creator risk side-by-side to optimize ROI before budget deployment.
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono px-3 py-1.5 rounded-lg bg-cyan-950/80 text-cyan-300 border border-cyan-800/60 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-sky-100 text-sky-800 border border-sky-200 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-sky-600" />
               {selectedStrategies.length} Active Scenarios
             </span>
           </div>
@@ -116,31 +116,31 @@ export const WhatIfArena: React.FC = () => {
           return (
             <div
               key={strat.id || idx}
-              className="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-4 hover:border-slate-700 transition-all"
+              className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-4 hover:border-sky-300 hover:shadow-md transition-all"
             >
               {/* Header */}
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-cyan-400 font-mono">
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 text-sky-800 font-mono border border-slate-200">
                     Scenario #{idx + 1}
                   </span>
                   <TierBadge tier={sim.launchTier} size="sm" />
                 </div>
 
-                <h3 className="text-sm font-bold text-white line-clamp-1" title={strat.title}>
+                <h3 className="text-sm font-black text-slate-900 line-clamp-1" title={strat.title}>
                   {strat.title}
                 </h3>
-                <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">
+                <p className="text-[11px] text-slate-500 mt-1 line-clamp-2">
                   {strat.creativeAngle}
                 </p>
               </div>
 
               {/* Dynamic Sliders to tweak scenario */}
-              <div className="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 space-y-3">
+              <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-3">
                 <div>
                   <div className="flex justify-between text-xs mb-1">
-                    <span className="text-slate-400">Budget:</span>
-                    <span className="font-mono font-bold text-emerald-400">
+                    <span className="text-slate-600 font-semibold">Budget:</span>
+                    <span className="font-mono font-black text-emerald-700">
                       ${strat.budget.toLocaleString()}
                     </span>
                   </div>
@@ -151,18 +151,18 @@ export const WhatIfArena: React.FC = () => {
                     step="10000"
                     value={strat.budget}
                     onChange={e => handleBudgetChange(idx, Number(e.target.value))}
-                    className="w-full h-1.5 bg-slate-800 rounded appearance-none cursor-pointer accent-emerald-400"
+                    className="w-full h-1.5 bg-slate-200 rounded appearance-none cursor-pointer accent-emerald-600"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">
+                  <label className="block text-[10px] uppercase font-bold text-slate-500 mb-1">
                     Strategy Archetype:
                   </label>
                   <select
                     value={strat.strategyType}
                     onChange={e => handleStrategyTypeChange(idx, e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-2 py-1 focus:outline-none"
+                    className="w-full bg-white border border-slate-300 text-xs text-slate-900 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-sky-500"
                   >
                     <option value="organic_social_reactive">⚡ Organic Reactive</option>
                     <option value="paid_amplification">📢 Paid Amplification</option>
@@ -173,54 +173,54 @@ export const WhatIfArena: React.FC = () => {
               </div>
 
               {/* Key Simulated Metrics */}
-              <div className="space-y-2 text-xs pt-1 border-t border-slate-800/80">
-                <div className="flex justify-between items-center py-1 border-b border-slate-800/50">
-                  <span className="text-slate-400">Confidence Score:</span>
-                  <span className="font-mono font-bold text-cyan-300">{sim.confidenceScore}/100</span>
+              <div className="space-y-2 text-xs pt-1 border-t border-slate-100">
+                <div className="flex justify-between items-center py-1 border-b border-slate-100">
+                  <span className="text-slate-500">Confidence Score:</span>
+                  <span className="font-mono font-black text-sky-800">{sim.confidenceScore}/100</span>
                 </div>
 
-                <div className="flex justify-between items-center py-1 border-b border-slate-800/50">
-                  <span className="text-slate-400">Expected Reach:</span>
-                  <span className="font-mono font-extrabold text-white">
+                <div className="flex justify-between items-center py-1 border-b border-slate-100">
+                  <span className="text-slate-500">Expected Reach:</span>
+                  <span className="font-mono font-black text-slate-900">
                     {(sim.expectedTotalReach / 1000000).toFixed(2)}M
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center py-1 border-b border-slate-800/50">
-                  <span className="text-slate-400">Est. Media ROI:</span>
-                  <span className="font-mono font-bold text-purple-400">{sim.estimatedROI}x</span>
+                <div className="flex justify-between items-center py-1 border-b border-slate-100">
+                  <span className="text-slate-500">Est. Media ROI:</span>
+                  <span className="font-mono font-black text-purple-700">{sim.estimatedROI}x</span>
                 </div>
 
-                <div className="flex justify-between items-center py-1 border-b border-slate-800/50">
-                  <span className="text-slate-400">Positive Sentiment:</span>
-                  <span className="font-mono font-bold text-emerald-400">
+                <div className="flex justify-between items-center py-1 border-b border-slate-100">
+                  <span className="text-slate-500">Positive Sentiment:</span>
+                  <span className="font-mono font-black text-emerald-700">
                     {sim.sentimentBreakdown.positive}%
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center py-1 border-b border-slate-800/50">
-                  <span className="text-slate-400">Backlash Risk:</span>
+                <div className="flex justify-between items-center py-1 border-b border-slate-100">
+                  <span className="text-slate-500">Backlash Risk:</span>
                   <span className={`font-mono font-bold ${
-                    sim.backlashProbability < 15 ? 'text-emerald-400' : 'text-rose-400'
+                    sim.backlashProbability < 15 ? 'text-emerald-700' : 'text-rose-700'
                   }`}>
                     {sim.backlashProbability}% ({sim.backlashRiskLevel})
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center py-1">
-                  <span className="text-slate-400">Active Guardrails:</span>
-                  <span className="font-mono text-slate-300">
+                  <span className="text-slate-500">Active Guardrails:</span>
+                  <span className="font-mono text-slate-700">
                     {sim.guardrailFlags.length === 0 ? (
-                      <span className="text-emerald-400 font-semibold">0 Flags</span>
+                      <span className="text-emerald-700 font-bold">0 Flags</span>
                     ) : (
-                      <span className="text-amber-400 font-bold">{sim.guardrailFlags.length} Flag(s)</span>
+                      <span className="text-amber-800 font-bold">{sim.guardrailFlags.length} Flag(s)</span>
                     )}
                   </span>
                 </div>
               </div>
 
               {/* Rationale */}
-              <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800 text-[11px] text-slate-300 leading-relaxed">
+              <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 text-[11px] text-slate-600 leading-relaxed font-medium">
                 {sim.launchTierRationale}
               </div>
             </div>
@@ -231,48 +231,48 @@ export const WhatIfArena: React.FC = () => {
       {/* Comparison Chart Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Reach & ROI Comparison */}
-        <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-lg">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-cyan-400" />
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600 mb-3 flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-sky-600" />
             Projected Reach (Millions) vs Expected Media ROI
           </h4>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1E293B" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
                 <XAxis dataKey="name" stroke="#64748B" fontSize={10} tickLine={false} />
                 <YAxis stroke="#64748B" fontSize={11} tickLine={false} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#0B0F19', borderColor: '#334155', borderRadius: '0.75rem' }} 
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', borderRadius: '0.75rem', color: '#0F172A' }} 
                   itemStyle={{ fontSize: '11px', fontFamily: 'monospace' }}
                 />
                 <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '8px' }} />
-                <Bar dataKey="ReachMillions" name="Reach (M)" fill="#06B6D4" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="ROI" name="ROI Multiple (x)" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="ReachMillions" name="Reach (M)" fill="#0284C7" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="ROI" name="ROI Multiple (x)" fill="#7C3AED" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Sentiment & Risk Comparison */}
-        <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-lg">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-            <ShieldAlert className="w-4 h-4 text-purple-400" />
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600 mb-3 flex items-center gap-2">
+            <ShieldAlert className="w-4 h-4 text-purple-600" />
             Positive Sentiment % vs Backlash Probability %
           </h4>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1E293B" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
                 <XAxis dataKey="name" stroke="#64748B" fontSize={10} tickLine={false} />
                 <YAxis stroke="#64748B" fontSize={11} tickLine={false} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#0B0F19', borderColor: '#334155', borderRadius: '0.75rem' }} 
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', borderRadius: '0.75rem', color: '#0F172A' }} 
                   itemStyle={{ fontSize: '11px', fontFamily: 'monospace' }}
                 />
                 <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '8px' }} />
-                <Bar dataKey="PositiveSentiment" name="Positive Sentiment %" fill="#10B981" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="BacklashRisk" name="Backlash Risk %" fill="#F43F5E" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="PositiveSentiment" name="Positive Sentiment %" fill="#059669" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="BacklashRisk" name="Backlash Risk %" fill="#E11D48" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

@@ -24,7 +24,7 @@ const brands: Brand[] = brandsData as Brand[];
 const preloadedStrategies: CandidateStrategy[] = preloadedStrategiesData as CandidateStrategy[];
 
 const STRATEGY_TYPES: { id: StrategyType; label: string; desc: string; icon: string }[] = [
-  { id: 'organic_social_reactive', label: 'Organic Reactive', desc: 'Real-time meme/cultural newsjacking (Fast, High ROI)', icon: '⚡' },
+  { id: 'organic_social_reactive', label: 'Organic Reactive', desc: 'Real-time cultural newsjacking (Fast, High ROI)', icon: '⚡' },
   { id: 'paid_amplification', label: 'Paid Amplification', desc: 'Targeted media budget across core digital channels', icon: '📢' },
   { id: 'influencer_partnership', label: 'Influencer Co-Creation', desc: 'Creator partnerships and UGC challenges', icon: '🤝' },
   { id: 'full_campaign_pivot', label: 'Full Campaign Pivot', desc: 'Mass 360 multi-channel brand launch (TV, OOH, Digital)', icon: '🔄' }
@@ -93,18 +93,18 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
   };
 
   return (
-    <div className="bg-[#111827]/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md">
+    <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-6 shadow-sm">
       {/* Upstream Compass Candidate Strategies Selector */}
-      <div className="mb-6 pb-5 border-b border-slate-800/80">
+      <div className="mb-6 pb-5 border-b border-slate-200/80">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Bookmark className="w-4 h-4 text-cyan-400" />
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+            <Bookmark className="w-4 h-4 text-sky-600" />
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-700">
               Candidate Strategies from Upstream Compass Agent
             </span>
           </div>
-          <span className="text-[11px] text-cyan-400/90 font-mono bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-800/40">
-            5 Pre-loaded Scenarios
+          <span className="text-[11px] text-sky-700 font-mono font-bold bg-sky-100 px-2 py-0.5 rounded border border-sky-200">
+            5 Pre-Loaded Scenarios
           </span>
         </div>
 
@@ -115,22 +115,22 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
               <button
                 key={pStrat.id}
                 onClick={() => loadPreloaded(pStrat)}
-                className={`text-left px-3 py-2 rounded-xl border text-xs font-medium shrink-0 transition-all ${
+                className={`text-left px-3.5 py-2 rounded-xl border text-xs font-medium shrink-0 transition-all ${
                   isSelected
-                    ? 'bg-cyan-500/20 border-cyan-400 text-white shadow-md shadow-cyan-500/10'
-                    : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700 hover:bg-slate-800/70'
+                    ? 'bg-sky-50 border-sky-400 text-sky-900 shadow-xs ring-1 ring-sky-400'
+                    : 'bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-100/70'
                 }`}
               >
-                <div className="font-bold flex items-center gap-1.5 text-slate-100">
-                  <span className="text-cyan-400">●</span>
+                <div className="font-bold flex items-center gap-1.5 text-slate-900">
+                  <span className="text-sky-600 font-bold">●</span>
                   <span>{pStrat.title}</span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-0.5 flex items-center gap-2">
-                  <span className="uppercase text-slate-400 font-semibold">{pStrat.brandId}</span>
+                <div className="text-[10px] text-slate-500 mt-0.5 flex items-center gap-2">
+                  <span className="uppercase text-sky-800 font-bold">{pStrat.brandId}</span>
                   <span>•</span>
                   <span>${(pStrat.budget / 1000).toFixed(0)}k</span>
                   <span>•</span>
-                  <span>{pStrat.markets.join(', ')}</span>
+                  <span>{pStrat.scheduledDate || pStrat.markets.join(', ')}</span>
                 </div>
               </button>
             );
@@ -142,7 +142,7 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
       <div className="space-y-5">
         {/* Brand Selector */}
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
             Unilever Brand Portfolio
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
@@ -153,20 +153,20 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
                   key={b.id}
                   type="button"
                   onClick={() => handleBrandChange(b.id)}
-                  className={`p-2.5 rounded-xl border text-left transition-all ${
+                  className={`p-3 rounded-xl border text-left transition-all ${
                     isSelected
-                      ? 'bg-slate-800/90 border-cyan-400 shadow-md ring-1 ring-cyan-500/40'
-                      : 'bg-slate-900/50 border-slate-800 hover:border-slate-700 hover:bg-slate-850'
+                      ? 'bg-sky-50/80 border-sky-400 shadow-xs ring-1 ring-sky-400'
+                      : 'bg-slate-50 border-slate-200 hover:border-slate-300 hover:bg-slate-100'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-white">{b.name}</span>
+                    <span className="text-xs font-bold text-slate-900">{b.name}</span>
                     <span 
                       className="w-2.5 h-2.5 rounded-full" 
                       style={{ backgroundColor: b.color }} 
                     />
                   </div>
-                  <div className="text-[10px] text-slate-400 truncate mt-0.5">{b.category}</div>
+                  <div className="text-[10px] text-slate-500 truncate mt-0.5 font-medium">{b.category}</div>
                 </button>
               );
             })}
@@ -175,7 +175,7 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
 
         {/* Strategy Title */}
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
             Strategy Campaign Title
           </label>
           <input
@@ -183,13 +183,13 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
             value={strategy.title}
             onChange={e => onChange({ ...strategy, title: e.target.value })}
             placeholder="e.g. Rexona Referee Armband Viral Reactive"
-            className="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+            className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:bg-white"
           />
         </div>
 
         {/* Strategy Type Selector */}
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
             Strategy Archetype
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -200,16 +200,16 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
                   key={st.id}
                   type="button"
                   onClick={() => onChange({ ...strategy, strategyType: st.id })}
-                  className={`p-3 rounded-xl border text-left transition-all flex items-start gap-3 ${
+                  className={`p-3.5 rounded-xl border text-left transition-all flex items-start gap-3 ${
                     isSelected
-                      ? 'bg-gradient-to-r from-cyan-950/50 to-slate-900 border-cyan-400 ring-1 ring-cyan-500/30 text-white'
-                      : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 text-slate-300'
+                      ? 'bg-sky-50 border-sky-400 ring-1 ring-sky-400 text-sky-950 shadow-xs'
+                      : 'bg-slate-50 border-slate-200 hover:border-slate-300 hover:bg-slate-100 text-slate-700'
                   }`}
                 >
                   <span className="text-lg shrink-0 mt-0.5">{st.icon}</span>
                   <div>
-                    <div className="text-xs font-bold text-white">{st.label}</div>
-                    <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">{st.desc}</div>
+                    <div className="text-xs font-bold text-slate-900">{st.label}</div>
+                    <div className="text-[11px] text-slate-500 mt-0.5 leading-snug">{st.desc}</div>
                   </div>
                 </button>
               );
@@ -222,11 +222,11 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
           {/* Target Markets */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                <Globe2 className="w-3.5 h-3.5 text-cyan-400" />
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                <Globe2 className="w-3.5 h-3.5 text-sky-600" />
                 Target Market(s)
               </label>
-              <span className="text-[10px] text-slate-400 font-mono">Multi-select</span>
+              <span className="text-[10px] text-slate-500 font-mono">Multi-select</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {AVAILABLE_MARKETS.map(market => {
@@ -236,10 +236,10 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
                     key={market}
                     type="button"
                     onClick={() => handleMarketToggle(market)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                       isSelected
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/60 font-semibold'
-                        : 'bg-slate-900/80 text-slate-400 border border-slate-800 hover:border-slate-700'
+                        ? 'bg-sky-600 text-white border border-sky-600 shadow-xs'
+                        : 'bg-slate-100 text-slate-600 border border-slate-200 hover:border-slate-300'
                     }`}
                   >
                     {market}
@@ -252,11 +252,11 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
           {/* Channel Mix */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                <Radio className="w-3.5 h-3.5 text-purple-400" />
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                <Radio className="w-3.5 h-3.5 text-purple-600" />
                 Channel Mix
               </label>
-              <span className="text-[10px] text-slate-400 font-mono">Multi-select</span>
+              <span className="text-[10px] text-slate-500 font-mono">Multi-select</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {AVAILABLE_CHANNELS.map(channel => {
@@ -266,10 +266,10 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
                     key={channel}
                     type="button"
                     onClick={() => handleChannelToggle(channel)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                       isSelected
-                        ? 'bg-purple-500/20 text-purple-300 border border-purple-400/60 font-semibold'
-                        : 'bg-slate-900/80 text-slate-400 border border-slate-800 hover:border-slate-700'
+                        ? 'bg-purple-600 text-white border border-purple-600 shadow-xs'
+                        : 'bg-slate-100 text-slate-600 border border-slate-200 hover:border-slate-300'
                     }`}
                   >
                     {channel}
@@ -285,11 +285,11 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
           {/* Budget */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                <DollarSign className="w-3.5 h-3.5 text-emerald-600" />
                 Allocated Budget (USD)
               </label>
-              <span className="text-sm font-extrabold text-emerald-400 font-mono">
+              <span className="text-sm font-black text-emerald-700 font-mono">
                 ${strategy.budget.toLocaleString()}
               </span>
             </div>
@@ -300,7 +300,7 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
               step="5000"
               value={strategy.budget}
               onChange={e => onChange({ ...strategy, budget: Number(e.target.value) })}
-              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-400"
+              className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
             />
             <div className="flex justify-between items-center gap-1 mt-2">
               {[25000, 75000, 250000, 750000, 1500000].map(val => (
@@ -308,10 +308,10 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
                   key={val}
                   type="button"
                   onClick={() => onChange({ ...strategy, budget: val })}
-                  className={`text-[10px] px-2 py-0.5 rounded border transition-colors ${
+                  className={`text-[10px] px-2.5 py-0.5 rounded-md border font-semibold transition-colors ${
                     strategy.budget === val 
-                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50' 
-                      : 'bg-slate-900 text-slate-400 border-slate-800 hover:border-slate-700'
+                      ? 'bg-emerald-100 text-emerald-800 border-emerald-300' 
+                      : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-300'
                   }`}
                 >
                   ${val >= 1000000 ? `${(val / 1000000).toFixed(1)}M` : `${val / 1000}k`}
@@ -322,8 +322,8 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
 
           {/* Timeline Urgency */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-amber-400" />
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-amber-600" />
               Timeline Urgency
             </label>
             <div className="grid grid-cols-3 gap-1.5">
@@ -334,14 +334,14 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
                     key={opt.id}
                     type="button"
                     onClick={() => onChange({ ...strategy, timelineUrgency: opt.id })}
-                    className={`p-2 rounded-xl border text-center transition-all ${
+                    className={`p-2.5 rounded-xl border text-center transition-all ${
                       isSelected
-                        ? 'bg-amber-500/15 border-amber-400 text-amber-200 ring-1 ring-amber-500/30'
-                        : 'bg-slate-900/80 border-slate-800 text-slate-400 hover:border-slate-700'
+                        ? 'bg-amber-100 border-amber-400 text-amber-900 ring-1 ring-amber-400 font-bold'
+                        : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300'
                     }`}
                   >
                     <div className="text-[11px] font-bold">{opt.label}</div>
-                    <div className="text-[9px] text-slate-400 truncate mt-0.5">{opt.sub}</div>
+                    <div className="text-[9px] text-slate-500 truncate mt-0.5">{opt.sub}</div>
                   </button>
                 );
               })}
@@ -352,12 +352,12 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
         {/* Tone / Creative Angle Copy */}
         <div>
           <div className="flex items-center justify-between mb-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5 text-cyan-400" />
+            <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+              <FileText className="w-3.5 h-3.5 text-sky-600" />
               Creative Angle & Tone of Voice Prompt
             </label>
-            <span className="text-[10px] text-slate-400 font-mono">
-              {strategy.creativeAngle.length} chars (Live Guardrail Screen)
+            <span className="text-[10px] text-slate-500 font-mono">
+              {strategy.creativeAngle.length} chars (Live Multi-Agent Screen)
             </span>
           </div>
           <textarea
@@ -365,7 +365,7 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
             value={strategy.creativeAngle}
             onChange={e => onChange({ ...strategy, creativeAngle: e.target.value })}
             placeholder="Describe the campaign angle, key copy, hashtags, or creator brief. Example: 'Humorous reactive matchday video reacting to sweaty referee moments...'"
-            className="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+            className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:bg-white"
           />
         </div>
 
@@ -375,15 +375,14 @@ export const StrategyInputForm: React.FC<StrategyInputFormProps> = ({
             type="button"
             onClick={onSimulate}
             disabled={isLoading}
-            className="w-full relative group overflow-hidden rounded-xl p-[1.5px] font-semibold text-white transition-all duration-300 disabled:opacity-50"
+            className="w-full relative group overflow-hidden rounded-xl p-[1px] font-semibold text-white transition-all duration-300 disabled:opacity-50 shadow-md"
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-teal-400 to-purple-600 rounded-xl group-hover:opacity-100 transition-opacity" />
-            <div className="relative px-6 py-3.5 bg-slate-950 rounded-[10px] flex items-center justify-center gap-3 transition-all group-hover:bg-opacity-90">
-              <Sparkles className="w-5 h-5 text-cyan-400 animate-pulse" />
-              <span className="text-base font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-300">
+            <div className="px-6 py-3.5 bg-gradient-to-r from-sky-600 via-teal-600 to-purple-600 rounded-xl flex items-center justify-center gap-3 transition-all hover:brightness-105">
+              <Sparkles className="w-5 h-5 text-white animate-pulse" />
+              <span className="text-base font-bold tracking-wide text-white">
                 {isLoading ? 'Running Mirror Simulation...' : 'Simulate Strategy & Screen Risks'}
               </span>
-              <span className="text-xs px-2 py-0.5 rounded bg-cyan-900/60 text-cyan-300 border border-cyan-500/30 font-mono">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-white/20 text-white font-mono font-bold">
                 Monte Carlo Prior
               </span>
             </div>

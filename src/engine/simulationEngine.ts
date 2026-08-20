@@ -3,7 +3,8 @@ import type {
   SimulationResult, 
   DailyReachPoint, 
   FactorDriver, 
-  HistoricalCampaign 
+  HistoricalCampaign,
+  KpiReasoning
 } from './types';
 import { findNearestHistoricalCampaigns, calculateDataDensityScore } from './similarityEngine';
 import { runGuardrailScreening } from './guardrailEngine';
@@ -237,10 +238,10 @@ export function runSimulation(strategy: CandidateStrategy): SimulationResult {
   });
 
   const backlashProbability = Math.min(95, Math.max(2, Math.round(backlashBase + (random() * 4 - 2))));
-  const backlashRiskLevel = 
+  const backlashRiskLevel =
     backlashProbability < 10 ? 'Low' :
-    backlashProbability < 25 ? 'Medium' :
-    backlashProbability < 50 ? 'High' : 'Critical';
+      backlashProbability < 25 ? 'Medium' :
+        backlashProbability < 50 ? 'High' : 'Critical';
 
   // 9. Sentiment Distribution
   let posSent = Math.round(baselinePosSentiment * 100);
@@ -272,10 +273,10 @@ export function runSimulation(strategy: CandidateStrategy): SimulationResult {
   );
   confidenceScore = Math.min(96, Math.max(28, confidenceScore));
 
-  const confidenceLabel = 
+  const confidenceLabel =
     confidenceScore >= 75 ? 'High Confidence' :
-    confidenceScore >= 50 ? 'Moderate Confidence' : 
-    'Low Confidence / High Volatility';
+      confidenceScore >= 50 ? 'Moderate Confidence' :
+        'Low Confidence / High Volatility';
 
   // 12. Estimated ROI & Cost Per Engaged User
   const estimatedROI = Number((Math.max(1.1, baselineROI * (normPos / 80) * (urgencyReachMod))).toFixed(1));
@@ -292,6 +293,35 @@ export function runSimulation(strategy: CandidateStrategy): SimulationResult {
 
   // Executive Summary text
   const executiveSummary = `Predicted reach of ${(rawExpectedReach / 1000000).toFixed(1)}M users across ${strategy.markets.join(', ')} with ${normPos}% positive sentiment and ${confidenceScore}/100 model confidence. ${launchTierRationale}`;
+
+  // 14. Deterministic KPI Reasoning Breakdown
+  const kpiReasoning: KpiReasoning = {
+    reach: {
+      formula: `Reach = Baseline Priors (${(baselineReach / 1000000).toFixed(1)}M) × (Budget Ratio)^${elasticityExponent} × Channel Synergy (${channelReachMultiplier.toFixed(2)}x) × Urgency (${urgencyReachMod.toFixed(2)}x)`,
+      explanation: `Calculated from ${nearestCampaigns.length} nearest historical campaigns (${nearestCampaigns.map(c => c.campaignName.slice(0, 20) + '...').join(', ')}). Budget of $${strategy.budget.toLocaleString()} was scaled with diminishing returns exponent (${elasticityExponent}) and enhanced by ${strategy.channels.join(', ')} channel synergies.`,
+      benchmark: `Category benchmark for ${strategy.brandId.toUpperCase()}: 5M–30M reach depending on media mix.`
+    },
+    cpm: {
+      formula: `CPM = ($${strategy.budget.toLocaleString()} / ${(rawExpectedReach / 1000).toLocaleString()} k-impressions) = $${expectedCPM}`,
+      explanation: `Expected cost per thousand impressions. Blends selected channels (${strategy.channels.join(', ')}) where short-form organic video yields low unit CPMs ($2–$6), while broadcast/OOH anchors lift the blended rate to $${expectedCPM}.`,
+      benchmark: `Unilever Global Digital average: $6.50 – $14.00 CPM.`
+    },
+    roi: {
+      formula: `Media ROI = Historical Baseline (${baselineROI.toFixed(1)}x) × (Positive Sentiment ${normPos}% / 80%) × Urgency Velocity (${urgencyReachMod.toFixed(2)}x)`,
+      explanation: `Represents expected earned media value multiplier (${estimatedROI}x) generated from high positive social sentiment (${normPos}%) and organic virality relative to paid budget.`,
+      benchmark: `Unilever Reactive Benchmark: 3.5x – 6.0x earned media return.`
+    },
+    engagement: {
+      formula: `Engagement Rate = Historical Baseline (${baselineEngagement.toFixed(1)}%) × Channel Format Multiplier (${channelEngagementMultiplier.toFixed(2)}x)`,
+      explanation: `Expected interaction rate (${expectedEngagement}%) across likes, comments, shares, and saves. Vertical video formats on ${strategy.channels.filter(c => c === 'TikTok' || c === 'Instagram').join(' & ') || 'social feeds'} deliver a +18% engagement lift.`,
+      benchmark: `Industry average: 3.0% – 5.5% for creator and reactive video.`
+    },
+    costPerInteraction: {
+      formula: `Cost / Interaction = $${strategy.budget.toLocaleString()} / (${(rawExpectedReach / 1000000).toFixed(2)}M × ${expectedEngagement}%) = $${costPerEngagedUser}`,
+      explanation: `Direct media spend required to produce one active user engagement (${(engagedUsers / 1000).toFixed(0)}k total engaged users). Lower cost indicates high capital efficiency.`,
+      benchmark: `Top-quartile FMCG benchmark: < $0.25 per interaction.`
+    }
+  };
 
   return {
     strategyId: strategy.id,
@@ -332,6 +362,7 @@ export function runSimulation(strategy: CandidateStrategy): SimulationResult {
     topInfluencingCampaigns: nearestCampaigns,
     factorDrivers,
     executiveSummary,
+    kpiReasoning,
     isAiEnhanced: false
   };
 }
