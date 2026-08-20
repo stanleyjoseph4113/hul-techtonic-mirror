@@ -166,6 +166,7 @@ export interface SimulationResult {
     min: number;
     max: number;
   };
+  backlashRisk: number;
   backlashProbability: number; // 0 - 100
   backlashRiskLevel: 'Low' | 'Medium' | 'High' | 'Critical';
   estimatedROI: number; // Multiplier e.g. 4.2x

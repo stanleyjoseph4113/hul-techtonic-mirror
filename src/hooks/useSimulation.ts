@@ -1,11 +1,11 @@
 import { useState, useCallback } from 'react';
-import type { 
-  CandidateStrategy, 
-  SimulationResult, 
-  AuditLogEntry 
+import type {
+  CandidateStrategy,
+  SimulationResult,
+  AuditLogEntry
 } from '../engine/types';
 import { runSimulation } from '../engine/simulationEngine';
-import { enhanceSimulationWithAI } from '../engine/aiEnhancer';
+import { adjustSimulationWithLLM, enhanceSimulationWithAI } from '../engine/aiEnhancer';
 import { useLocalStorage } from './useLocalStorage';
 import preloadedStrategiesData from '../data/preloaded_strategies.json';
 
@@ -39,11 +39,17 @@ export function useSimulation() {
       await new Promise(resolve => setTimeout(resolve, 320));
     }
 
-    // Run deterministic core simulation engine
+    // 1. Run deterministic core simulation engine first.
     const rawResult = runSimulation(targetStrat);
 
-    // Optional background AI enhancement (falls back silently if no key)
-    const finalResult = await enhanceSimulationWithAI(targetStrat, rawResult);
+    // 2. Apply optional LLM numeric adjustments.
+    //    The adjustment function caches the exact multipliers for identical inputs,
+    //    so repeated simulations remain stable after the first successful LLM call.
+    const adjustedResult = await adjustSimulationWithLLM(targetStrat, rawResult);
+
+    // 3. Generate the existing executive summary / KPI reasoning from the
+    //    final numeric result. If the LLM is unavailable, this falls back silently.
+    const finalResult = await enhanceSimulationWithAI(targetStrat, adjustedResult);
 
     setCurrentResult(finalResult);
     setIsLoading(false);
@@ -62,8 +68,8 @@ export function useSimulation() {
   }, [currentStrategy, setAuditHistory]);
 
   const acknowledgeGuardrailFlag = useCallback((
-    flagId: string, 
-    justification: string, 
+    flagId: string,
+    justification: string,
     authorizedBy: string = 'Brand Director'
   ) => {
     if (!currentResult) return;
