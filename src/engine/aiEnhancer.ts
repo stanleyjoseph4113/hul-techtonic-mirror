@@ -7,9 +7,32 @@ import partnerships from '../data/partnerships.json';
 import preloadedStrategies from '../data/preloaded_strategies.json';
 
 const CACHE_KEY = 'mirror_llm_first_results_v1';
-const MODEL = 'meta/llama-3.3-70b-instruct';
+const MODEL = 'gemini-2.5-flash';
 const REQUEST_TIMEOUT_MS = 30_000;
 const SOURCE_FILES = ['brands.json', 'historical_campaigns.json', 'blocklist.json', 'cultural_flags.json', 'partnerships.json', 'preloaded_strategies.json'];
+// Gemini structured output prevents the model from returning prose or malformed JSON.
+const GEMINI_RESPONSE_SCHEMA = {
+  type: 'OBJECT',
+  properties: {
+    expectedTotalReach: { type: 'INTEGER' }, reachMin: { type: 'INTEGER' }, reachMax: { type: 'INTEGER' },
+    expectedCPM: { type: 'NUMBER' }, estimatedROI: { type: 'NUMBER' }, engagementRate: { type: 'NUMBER' }, conversionRate: { type: 'NUMBER' },
+    confidenceScore: { type: 'NUMBER' }, backlashProbability: { type: 'NUMBER' }, launchTier: { type: 'STRING' },
+    launchTierRationale: { type: 'STRING' }, executiveSummary: { type: 'STRING' },
+    sentiment: { type: 'OBJECT', properties: { positive: { type: 'NUMBER' }, negative: { type: 'NUMBER' } } },
+    gatingRecommendations: { type: 'ARRAY', items: { type: 'STRING' } },
+    topInfluencingCampaignIds: { type: 'ARRAY', items: { type: 'STRING' } },
+    reachCurve: { type: 'ARRAY', items: { type: 'NUMBER' } },
+    factorDrivers: { type: 'ARRAY', items: { type: 'OBJECT', properties: { factor: { type: 'STRING' }, impactType: { type: 'STRING' }, impactPercentage: { type: 'NUMBER' }, description: { type: 'STRING' }, category: { type: 'STRING' } } } },
+    guardrailFlags: { type: 'ARRAY', items: { type: 'OBJECT', properties: { type: { type: 'STRING' }, severity: { type: 'STRING' }, title: { type: 'STRING' }, matchedTrigger: { type: 'STRING' }, explanation: { type: 'STRING' }, remediationAdvice: { type: 'STRING' } } } },
+    kpiReasoning: { type: 'OBJECT', properties: {
+      reach: { type: 'OBJECT', properties: { formula: { type: 'STRING' }, explanation: { type: 'STRING' }, benchmark: { type: 'STRING' } } },
+      cpm: { type: 'OBJECT', properties: { formula: { type: 'STRING' }, explanation: { type: 'STRING' }, benchmark: { type: 'STRING' } } },
+      roi: { type: 'OBJECT', properties: { formula: { type: 'STRING' }, explanation: { type: 'STRING' }, benchmark: { type: 'STRING' } } },
+      engagement: { type: 'OBJECT', properties: { formula: { type: 'STRING' }, explanation: { type: 'STRING' }, benchmark: { type: 'STRING' } } },
+      costPerInteraction: { type: 'OBJECT', properties: { formula: { type: 'STRING' }, explanation: { type: 'STRING' }, benchmark: { type: 'STRING' } } }
+    } }
+  }
+};
 
 export interface LLMRunAttempt {
   simulation: SimulationResult | null;
@@ -121,30 +144,37 @@ export async function runLLMFirstSimulation(strategy: CandidateStrategy): Promis
   const cached = readCache()[key];
   if (cached) return { simulation: { ...cached, timestamp: new Date().toISOString(), isAiEnhanced: true, aiTrace: { mode: 'llm_cache', model: MODEL, sourceFiles: SOURCE_FILES, responseId: cached.aiTrace?.responseId } } };
   const knowledgeBase = JSON.stringify({ brands, historicalCampaigns, blocklist, culturalFlags, partnerships, preloadedStrategies });
-  const prompt = `You are Mirror, an LLM-first campaign simulation and risk engine for Unilever. Your judgment, grounded in the supplied JSON knowledge base, is the primary source of the assessment. Do not pretend a rule engine or mathematical simulator produced the answer. Use only supplied data; do not invent external evidence.\n\nCAMPAIGN BRIEF:\n${JSON.stringify(strategy)}\n\nKNOWLEDGE BASE (all src/data JSON files):\n${knowledgeBase}\n\nReturn only valid JSON with: expectedTotalReach integer, reachMin integer, reachMax integer, expectedCPM number, estimatedROI number, engagementRate number, conversionRate number, confidenceScore 0-100, backlashProbability 0-100, sentiment {positive,negative}, launchTier full_scale|regional_test|micro_test, launchTierRationale, gatingRecommendations array of 3-5 strings, executiveSummary, topInfluencingCampaignIds up to 3 exact historicalCampaign IDs, reachCurve 14 non-negative daily weights, factorDrivers up to 5 objects (factor, impactType positive|negative|neutral, impactPercentage, description, category budget|channel|urgency|market|brand_fit), guardrailFlags (type brand_safety|cultural_sensitivity|legal_ip, severity low|medium|high, title, matchedTrigger, explanation, remediationAdvice), kpiReasoning {reach,cpm,roi,engagement,costPerInteraction}; every KPI has formula, explanation, benchmark. Keep figures plausible for supplied historical data and reconcile CPM and cost per engaged user with budget, reach and engagement.`;
+  const prompt = `You are Mirror, an LLM-first campaign simulation and risk engine for Unilever. Your judgment, grounded only in the supplied JSON knowledge base, is the primary source of the assessment.\n\nCAMPAIGN BRIEF:\n${JSON.stringify(strategy)}\n\nKNOWLEDGE BASE (all src/data JSON files):\n${knowledgeBase}\n\nReturn the JSON shape in the response schema. Be concise: executiveSummary <= 70 words; each KPI formula, explanation, and benchmark <= 20 words; drivers and flags <= 3 each; recommendations <= 3. Use only exact historical campaign IDs. Keep figures plausible and reconcile CPM and cost per engaged user with budget, reach and engagement.`;
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   try {
     const upstream = await fetch('/api/mirror/analyze', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: MODEL, messages: [{ role: 'user', content: prompt }], temperature: .15, top_p: .9, max_tokens: 3000, stream: false }),
+      // Gemini generateContent API shape.
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: .2, topP: .7, maxOutputTokens: 16384, responseMimeType: 'application/json', responseSchema: GEMINI_RESPONSE_SCHEMA }
+      }),
       signal: controller.signal
     });
-    const payload = await upstream.json() as { id?: string; choices?: { message?: { content?: string } }[]; error?: string; detail?: string };
-    if (!upstream.ok) return { simulation: null, failureReason: `NVIDIA API ${upstream.status}: ${payload.detail || payload.error || 'Request failed.'}` };
-    const content = payload.choices?.[0]?.message?.content;
-    if (!content) return { simulation: null, failureReason: 'NVIDIA returned an empty completion.' };
+    const payload = await upstream.json() as { responseId?: string; candidates?: { finishReason?: string; content?: { parts?: { text?: string }[] } }[]; error?: { message?: string } | string };
+    const errorMessage = typeof payload.error === 'string' ? payload.error : payload.error?.message;
+    if (!upstream.ok) return { simulation: null, failureReason: `Gemini API ${upstream.status}: ${errorMessage || 'Request failed.'}` };
+    const finishReason = payload.candidates?.[0]?.finishReason;
+    if (finishReason === 'MAX_TOKENS') return { simulation: null, failureReason: 'Gemini response was truncated at its output limit.' };
+    const content = payload.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('');
+    if (!content) return { simulation: null, failureReason: 'Gemini returned an empty completion.' };
     const result = buildResult(strategy, JSON.parse(content));
-    if (!result) return { simulation: null, failureReason: 'NVIDIA completion did not contain a valid campaign result.' };
-    result.aiTrace = { mode: 'llm_first', model: MODEL, sourceFiles: SOURCE_FILES, responseId: payload.id };
+    if (!result) return { simulation: null, failureReason: 'Gemini completion did not contain a valid campaign result.' };
+    result.aiTrace = { mode: 'llm_first', model: MODEL, sourceFiles: SOURCE_FILES, responseId: payload.responseId };
     const cache = readCache(); cache[key] = result; writeCache(cache);
     return { simulation: result };
   } catch (error) {
-    console.warn('NVIDIA LLM-first simulation unavailable; using local fallback.', error);
+    console.warn('Gemini LLM-first simulation unavailable; using local fallback.', error);
     const failureReason = error instanceof DOMException && error.name === 'AbortError'
-      ? `NVIDIA request timed out after ${REQUEST_TIMEOUT_MS / 1000} seconds.`
-      : error instanceof Error ? error.message : 'Unknown NVIDIA API error.';
+      ? `Gemini request timed out after ${REQUEST_TIMEOUT_MS / 1000} seconds.`
+      : error instanceof Error ? error.message : 'Unknown Gemini API error.';
     return { simulation: null, failureReason };
   } finally {
     window.clearTimeout(timeout);

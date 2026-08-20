@@ -93,7 +93,7 @@ export const SimulationResults: React.FC<SimulationResultsProps> = ({
               {simulation.isAiEnhanced && (
                 <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800 border border-purple-200 flex items-center gap-1">
                   <Sparkles className="w-3 h-3 text-purple-600" />
-                  NVIDIA Llama-3.3 Grounded Analysis
+                  Gemini 2.5 Flash Grounded Analysis
                 </span>
               )}
             </div>
@@ -174,13 +174,13 @@ export const SimulationResults: React.FC<SimulationResultsProps> = ({
             <span className={`text-[10px] font-mono font-bold px-2 py-1 rounded-full ${
               simulation.aiTrace.mode === 'fallback' ? 'bg-amber-100 text-amber-800' : 'bg-purple-100 text-purple-800'
             }`}>
-              {simulation.aiTrace.mode === 'llm_first' ? 'LIVE NVIDIA LLM RESULT' : simulation.aiTrace.mode === 'llm_cache' ? 'CACHED NVIDIA LLM RESULT' : 'LOCAL FALLBACK — LLM NOT USED'}
+              {simulation.aiTrace.mode === 'llm_first' ? 'LIVE GEMINI LLM RESULT' : simulation.aiTrace.mode === 'llm_cache' ? 'CACHED GEMINI LLM RESULT' : 'LOCAL FALLBACK — LLM NOT USED'}
             </span>
           </summary>
           <div className="mt-3 pt-3 border-t border-slate-200/70 grid gap-2 text-xs text-slate-700">
             <p><span className="font-bold">Model:</span> {simulation.aiTrace.model}</p>
             {simulation.aiTrace.sourceFiles.length > 0 && <p><span className="font-bold">Grounded sources:</span> {simulation.aiTrace.sourceFiles.join(', ')}</p>}
-            {simulation.aiTrace.responseId && <p><span className="font-bold">NVIDIA response ID:</span> <span className="font-mono">{simulation.aiTrace.responseId}</span></p>}
+            {simulation.aiTrace.responseId && <p><span className="font-bold">Gemini response ID:</span> <span className="font-mono">{simulation.aiTrace.responseId}</span></p>}
             {simulation.aiTrace.failureReason && <p className="text-amber-800"><span className="font-bold">Why LLM was skipped:</span> {simulation.aiTrace.failureReason}</p>}
             <p className="text-slate-500">
               {simulation.aiTrace.mode === 'fallback'

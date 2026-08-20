@@ -30,7 +30,7 @@ Sense (Pulse) ──► Strategize (Compass) ──► [ Simulate (Mirror) ] ─
 
 ## 2. Core Simulation Logic & Defensible Mathematical Formulas
 
-Mirror is now **LLM-first**: NVIDIA Llama receives the candidate brief together with every JSON knowledge file in `src/data/` and produces the primary campaign assessment, risk review, KPI reasoning, and launch recommendation. The earlier deterministic engine remains only as an offline/API-failure fallback.
+Mirror is now **LLM-first**: Gemini 2.5 Flash receives the candidate brief together with every JSON knowledge file in `src/data/` and produces the primary campaign assessment, risk review, KPI reasoning, and launch recommendation. The earlier deterministic engine remains only as an offline/API-failure fallback.
 
 ### 2.1 Multi-Attribute k-NN Similarity Prior
 Candidate strategies are matched against historical campaigns across 5 weighted dimensions:
@@ -81,12 +81,12 @@ Daily reach accumulation follows channel-specific Weibull decay curves:
 
 ## 4. Zero-Cost Client-Side Architecture
 
-Mirror is client-side and uses the configured NVIDIA API key for its primary analysis:
+Mirror is client-side and uses the configured Gemini API key for its primary analysis:
 - **Framework**: React 19 + TypeScript + Vite
 - **Styling**: Tailwind CSS (Dark Enterprise Palette)
 - **Charts**: Recharts (Free, Canvas/SVG client-side rendering)
 - **Icons**: Lucide React
-- **LLM**: NVIDIA NIM via `meta/llama-3.3-70b-instruct`
+- **LLM**: Google Gemini via `gemini-2.5-flash`
 - **Hosting**: Static distribution hosted for free on GitHub Pages
 
 ---
@@ -106,14 +106,14 @@ cd mirror
 # 2. Install dependencies
 npm install
 
-# 3. Add your NVIDIA NIM key (Vite exposes only VITE_-prefixed variables)
-echo 'NVIDIA_API_KEY=your_key_here' > .env
+# 3. Add your Gemini API key (server-side in local development)
+echo 'GEMINI_API_KEY=your_key_here' > .env
 
 # 4. Start local development server
 npm run dev
 ```
 
-The application will start at `http://localhost:5173`. The Vite development server proxies NVIDIA calls, so the browser does not hit NVIDIA directly and does not need CORS access. Without the key or when NVIDIA is unavailable, it falls back to the existing local deterministic simulator. A static GitHub Pages deployment needs an equivalent serverless proxy; it cannot make this protected NVIDIA request by itself.
+The application will start at `http://localhost:5173`. The Vite development server proxies Gemini calls, so the browser does not expose the key. Without the key or when Gemini is unavailable, it falls back to the existing local deterministic simulator. A static GitHub Pages deployment needs an equivalent serverless proxy; it cannot make this protected Gemini request by itself.
 
 ---
 
@@ -159,7 +159,7 @@ Mirror/
 │   │   ├── simulationEngine.ts       # 14-day reach trajectories, sentiment & factor attribution
 │   │   ├── guardrailEngine.ts        # Brand safety, cultural compliance & IP scanner
 │   │   ├── recommendationEngine.ts   # Launch tier gating & stage-gate playbooks
-│   │   └── aiEnhancer.ts             # NVIDIA Llama LLM-first assessment with local fallback
+│   │   └── aiEnhancer.ts             # Gemini LLM-first assessment with local fallback
 │   ├── components/
 │   │   ├── common/                   # Header, Badge, Modal, LoadingOverlay
 │   │   ├── studio/                   # StrategyInputForm, SimulationResults, ReachVelocityChart,

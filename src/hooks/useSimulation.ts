@@ -15,7 +15,7 @@ const INITIAL_STRATEGY: CandidateStrategy = preloadedStrategies[0];
 
 const SIMULATION_STAGES = [
   'Loading Mirror knowledge base from campaign data files...',
-  'Grounding NVIDIA Llama in comparable Unilever campaign evidence...',
+  'Grounding Gemini 2.5 Flash in comparable Unilever campaign evidence...',
   'Reasoning about reach, response, and commercial outcomes...',
   'Assessing cultural, brand-safety, and partnership risks...',
   'Generating the launch tier and stage-gate recommendation...'
@@ -40,7 +40,7 @@ export function useSimulation() {
         await new Promise(resolve => setTimeout(resolve, 320));
       }
 
-      // LLM-first: NVIDIA Llama receives the campaign brief plus all JSON data
+      // LLM-first: Gemini receives the campaign brief plus all JSON data
       // files and produces the full assessment. Local rules are offline fallback only.
       const llmAttempt = await runLLMFirstSimulation(targetStrat);
       const finalResult = llmAttempt.simulation ?? {

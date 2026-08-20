@@ -48,7 +48,7 @@ export const KpiReasoningModal: React.FC<KpiReasoningModalProps> = ({
 
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sky-100 text-sky-800 border border-sky-200 text-xs font-mono font-bold">
             <Sparkles className="w-3.5 h-3.5 text-sky-600" />
-            <span>{isAiEnhanced ? 'Llama-3.3 Reasoning' : 'Deterministic Prior'}</span>
+            <span>{isAiEnhanced ? 'Gemini 2.5 Flash Reasoning' : 'Deterministic Prior'}</span>
           </div>
         </div>
 

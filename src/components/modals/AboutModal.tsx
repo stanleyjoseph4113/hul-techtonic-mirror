@@ -137,7 +137,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             <span>Zero-Cost Client-Side Architecture</span>
           </div>
           <p>
-            This prototype runs 100% in the browser with zero external server dependencies. Powered by NVIDIA API / Llama-3.3-70B model with full deterministic client-side fallbacks.
+            This prototype uses Gemini 2.5 Flash for LLM-first reasoning, with a local deterministic fallback if the model is unavailable.
           </p>
         </div>
 
