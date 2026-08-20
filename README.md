@@ -1,193 +1,177 @@
-# Mirror | Simulation & Risk Engine for Brand Strategy
-### *Unilever Techtonic Season 8 Internal Innovation Challenge Prototype*
-
-> **Mirror** is a client-side Simulation & Risk Engine that predicts campaign performance, screens for brand and cultural risk, and recommends stage-gated launch tiers (*Micro-Test*, *Regional Test*, *Full-Scale Launch*) before real media budget is committed.
-
----
-
-## 1. Business Context & Strategic Need
-
-Unilever's brand teams (Rexona, Dove, Knorr, Magnum, Hellmann's, Lifebuoy) historically move too slowly to capitalize on fleeting viral cultural opportunities. For example, during a Premier League match, an organic Rexona logo visibility on a referee's armband went viral across social feeds, but the brand took days to coordinate approvals, missing the 24-hour cultural window.
-
-To eliminate this latency, Unilever is redesigning its brand operating model into an **Autonomous Closed AI Loop**:
-
-```
-Sense (Pulse) ──► Strategize (Compass) ──► [ Simulate (Mirror) ] ──► Activate ──► Measure (Echo) ──► Learn (Recalibrate)
-                                                  │
-                                                  ▼
-                                 Predicted Reach, Sentiment, Backlash Risk
-                                      & Stage-Gated Launch Tiers
-```
-
-1. **Sense (Pulse)**: Real-time cultural listening agent detects trending moments and scores brand relevance.
-2. **Strategize (Compass)**: Generates 3–5 candidate response strategies (e.g. *Organic Reactive*, *Paid Blitz*, *Creator Co-Creation*).
-3. **Simulate (Mirror) — *This Prototype***: Simulates predicted performance with confidence bands, evaluates multi-agent guardrails, and assigns launch tiers with factor attribution.
-4. **Activate**: Executes automated stage-gated micro-tests and scales spend if day-3 performance signals pass.
-5. **Measure (Echo)**: Tracks live sentiment, reach velocity, and e-commerce conversion lift.
-6. **Learn**: Re-injects empirical campaign outcomes back into Mirror to recalibrate historical priors.
-
----
-
-## 2. Core Simulation Logic & Defensible Mathematical Formulas
-
-Mirror is now **LLM-first**: Gemini 2.5 Flash receives the candidate brief together with every JSON knowledge file in `src/data/` and produces the primary campaign assessment, risk review, KPI reasoning, and launch recommendation. The earlier deterministic engine remains only as an offline/API-failure fallback.
-
-### 2.1 Multi-Attribute k-NN Similarity Prior
-Candidate strategies are matched against historical campaigns across 5 weighted dimensions:
-$$\text{Similarity}(C, H) = w_b \cdot S_{\text{brand}} + w_t \cdot S_{\text{type}} + w_m \cdot S_{\text{market}} + w_c \cdot S_{\text{channels}} + w_u \cdot S_{\text{budget}}$$
-- **Brand Affinity ($w_b = 0.25$)**: $1.0$ for exact brand match, $0.65$ for category match.
-- **Strategy Archetype ($w_t = 0.30$)**: $1.0$ for exact match, $0.55$ for adjacent formats.
-- **Market Overlap ($w_m = 0.20$)**: Evaluates regional market alignment.
-- **Channel Overlap ($w_c = 0.15$)**: Jaccard index of selected channels.
-- **Budget Log-Distance ($w_u = 0.10$)**: $1 - \min(1, |\log_{10}(B_c) - \log_{10}(B_h)| / 2.0)$.
-
-### 2.2 Sub-Linear Budget Elasticity (Diminishing Marginal Returns)
-Reach scales sub-linearly relative to historical baseline spend:
-$$\text{Reach}_{\text{expected}} = \text{Reach}_{\text{hist}} \times \left(\frac{\text{Budget}_{\text{candidate}}}{\text{Budget}_{\text{hist}}}\right)^{0.68} \times \text{Synergy}_{\text{channels}} \times \text{Mod}_{\text{urgency}}$$
-
-### 2.3 14-Day Velocity & 90% Confidence Interval Bands
-Daily reach accumulation follows channel-specific Weibull decay curves:
-- **Organic Reactive**: Front-loaded peak on Days 1–3 ($e^{-0.35t}$).
-- **Paid / Mass TV**: Progressive S-curve peaking on Days 5–8 ($t^{2.2} e^{-0.4t}$).
-- **90% Confidence Spread**: Computed from historical standard deviation $\sigma$, rendering shaded upper/lower bounds.
-
-### 2.4 Multi-Agent Guardrail Matrix
-- **Brand Safety**: Keyword blocklist screening for competitor mentions (e.g. *Nivea*, *Old Spice*, *Heinz*, *Nestle*) and unsubstantiated absolute claims.
-- **Cultural Nuance**: Regional legal frameworks (German UWG §6 comparative law, UK CMA Green Claims Code, Indonesian Ramadan broadcast rules).
-- **IP & Exclusivity**: Verifies compliance with brand charters (e.g. Dove *No Digital Distortion Pledge*, Rexona *Premier League Kit Guidelines*).
-
-### 2.5 Launch Tier Gating Protocol
-| Launch Tier | Criteria | Recommended Action |
-| :--- | :--- | :--- |
-| 🟢 **Full-Scale Launch** | Confidence $\ge 75$, Zero high-risk flags, Backlash $< 15\%$ | Immediate simultaneous rollout across all target markets. |
-| 🟡 **Regional Test First** | Confidence $50 - 74$, or Medium risk flags, Backlash $15\% - 28\%$ | Phased pilot (20% budget in 1 representative market); Gate at 72H. |
-| 🔴 **Micro-Test / Hold** | Confidence $< 50$, or High risk flags, Backlash $\ge 28\%$ | Cap spend at $\$10\text{k}-\$25\text{k}$; Mandatory signed risk override required. |
-
----
-
-## 3. Features & Interactive Views
-
-- **Simulation Studio**: Pre-loaded candidate selector (Rexona referee moment, Dove AI watermark, Knorr Ramadan hack, Magnum Cannes pop-up, Hellmann's leftovers) and custom strategy builder.
-- **Hero Recommendation Banner**: Immediate Launch Tier badge, confidence meter (0–100), and executive summary.
-- **Reach & Velocity Chart (Recharts)**: 14-day interactive area chart with 90% confidence bands and daily velocity.
-- **Sentiment & Reaction Breakdown**: Net sentiment score, positive/neutral/negative split, and backlash risk meter.
-- **Risk & Guardrail Inspector**: Visual cards for brand safety, cultural rules, and legal IP with interactive **"Acknowledge & Justify"** override modal.
-- **Explainability Panel ("Why This Prediction?")**: Top 3 historical nearest neighbors and factor attribution score drivers.
-- **What-If Arena**: Side-by-side comparison of 2–3 strategy variants with real-time slider parameter tuning.
-- **Echo Calibration Dashboard**: Model accuracy metrics (MAPE 7.4%, Sentiment Precision 94.2%) and predicted vs. actual backtest charts demonstrating the "Echo → Learn" loop.
-- **Audit Trail & Governance Log**: In-browser `localStorage` history table with filtering and one-click CSV / JSON export.
-
----
-
-## 4. Zero-Cost Client-Side Architecture
-
-Mirror is client-side and uses the configured Gemini API key for its primary analysis:
-- **Framework**: React 19 + TypeScript + Vite
-- **Styling**: Tailwind CSS (Dark Enterprise Palette)
-- **Charts**: Recharts (Free, Canvas/SVG client-side rendering)
-- **Icons**: Lucide React
-- **LLM**: Google Gemini via `gemini-2.5-flash`
-- **Hosting**: Static distribution hosted for free on GitHub Pages
-
----
-
-## 5. Getting Started Locally
-
-### Prerequisites
-- Node.js (v18+)
-- npm (v9+)
-
-### Installation & Run
-```bash
-# 1. Clone the repository
 git clone https://github.com/<your-username>/mirror.git
-cd mirror
+<!--
+     Mirror — rewritten README
+     Goal: single-file, comprehensive, and actionable project README describing
+     what Mirror is, how it works, and how to run / extend it.
+-->
 
-# 2. Install dependencies
+# Mirror — Simulation & Risk Engine for Brand Strategy
+
+One-line summary: Mirror is a client-side simulation and risk-assessment engine that predicts short-term campaign reach, sentiment, and backlash risk — then recommends a stage-gated launch plan (Micro-Test → Regional Test → Full-Scale Launch) before real media spend is committed.
+
+Why this project exists
+- Brands must act faster than traditional approval workflows allow. Mirror closes the loop between trend detection, strategy generation, simulation, and activation by providing a rapid, explainable decisioning layer that surfaces confidence, risk, and recommended next steps.
+
+Table of contents
+- Overview
+- How Mirror works (architectural pipeline)
+- Core algorithms & defensible formulas
+- Data, guardrails, and explainability
+- Project structure (what's in `src/` and `public/`)
+- Development: setup, run, and configuration
+- Deployment & security considerations
+- Contributing, licensing, and acknowledgements
+
+---
+
+## Overview
+
+Mirror is designed for fast, explainable decisions in culturally sensitive, time-bound moments (e.g., viral social moments, live events). It accepts a candidate strategy and returns:
+- A predicted 14‑day reach trajectory with 90% confidence bands
+- Daily reach velocity and cumulative reach estimates
+- Sentiment breakdown and backlash probability
+- Guardrail checks (brand safety, cultural/legal, IP/exclusivity)
+- A recommended launch tier with gating rules and next-step playbook
+- Top historical precedents and factor attribution for explainability
+
+The prototype is intentionally client-side to enable low-cost distribution and rapid iteration; its default primary analysis path uses a hosted LLM (Gemini). A deterministic local simulator is available as a fallback where LLM access is restricted.
+
+---
+
+## How Mirror works — Pipeline
+
+1. Input: user or upstream system provides a candidate strategy (brand, market, creative format, channels, budget, urgency).
+2. Knowledge context: Mirror loads the JSON knowledge bundle from `src/data/` (brands, historical campaigns, blocklist, cultural flags, preloaded strategies) and uses these as priors.
+3. Similarity matching: the candidate is matched against historical campaigns to find the nearest neighbors and form empirical priors.
+4. LLM assessment (primary): the candidate brief plus JSON priors are sent to Gemini (`gemini-2.5-flash`) to produce a narrative assessment, KPI reasoning, and launch recommendation.
+5. Deterministic simulation (fallback / ensemble): the simulation engine runs a 14‑day channelized reach model and computes confidence bands from historical variability.
+6. Guardrails run in parallel: textual/keyword scans, cultural rule checks, and IP/exclusivity policies produce binary/graded flags.
+7. Recommendation & gating: launch tier is determined via a ruleset that combines confidence, risk flags, and predicted backlash.
+8. Output: UI shows the hero recommendation, time-series charts, explainability panel, guardrail inspector, and options to acknowledge/override (with audit trail).
+
+---
+
+## Core algorithms & defensible formulas
+
+The codebase uses a mix of empirical—historical nearest-neighbor priors—and domain-driven formulas to keep predictions defensible and explainable.
+
+- Similarity prior (multi-attribute weighted k-NN): a candidate C is scored against historical campaign H as a weighted sum of attribute similarities:
+$$
+	ext{Similarity}(C, H) = w_b S_{brand} + w_t S_{type} + w_m S_{market} + w_c S_{channels} + w_u S_{budget}
+$$
+where weights are tuned from backtests (example defaults: $w_b=0.25, w_t=0.30, w_m=0.20, w_c=0.15, w_u=0.10$).
+
+- Budget elasticity (sub-linear scaling): expected reach scales sub-linearly with budget to model diminishing marginal returns:
+$$
+	ext{Reach}_{expected} = \text{Reach}_{hist} \left(\frac{Budget_{cand}}{Budget_{hist}}\right)^{\alpha}, \quad \alpha \approx 0.65-0.72
+$$
+
+- Velocity models: channel-specific temporal kernels (e.g., front-loaded organic kernels vs. delayed paid S-curves) generate daily shape; ensemble variance from historical repeats yields confidence bands.
+
+- Guardrails: a matrix of rule checks implemented in `src/engine/guardrailEngine.ts` using:
+     - keyword blocklists and regex rules
+     - regional policy lookups from `cultural_flags.json`
+     - IP/exclusivity checks using `partnerships.json`
+
+---
+
+## Data & explainability
+
+- Key data files are in `src/data/`:
+     - `brands.json` — brand metadata and portfolio mappings
+     - `historical_campaigns.json` — synthetic/realized past campaigns used for k-NN priors
+     - `blocklist.json` — keyword filters for brand safety
+     - `cultural_flags.json` — country/region sensitivity rules
+     - `preloaded_strategies.json` — example candidate briefs
+
+- Explainability outputs include: nearest-neighbor examples, factor attribution scores for drivers (brand, channel mix, budget, urgency), and the LLM narrative that justifies the recommendation.
+
+---
+
+## Project structure (high-level)
+
+See the `src/` folder for the working code. Primary folders:
+- `src/engine/` — simulation, similarity, recommendation, guardrails, LLM enhancer
+- `src/components/` — UI: studio, charts, guardrail inspector, modals
+- `src/data/` — JSON knowledge files
+- `src/hooks/` — reusable hooks (simulation orchestration, localStorage)
+
+---
+
+## Development: setup, run, and configuration
+
+Prerequisites
+- Node.js v18+ and npm v9+ recommended
+
+Install & start
+```bash
+# 1. Install
 npm install
 
-# 3. Add your Gemini API key (server-side in local development)
-echo 'GEMINI_API_KEY=your_key_here' > .env
+# 2. Create a local .env with keys (see Security notes)
+cp .env.example .env
+# add GEMINI_API_KEY and any proxy secrets
 
-# 4. Start local development server
+# 3. Start dev server
 npm run dev
 ```
 
-The application will start at `http://localhost:5173`. The Vite development server proxies Gemini calls, so the browser does not expose the key. Without the key or when Gemini is unavailable, it falls back to the existing local deterministic simulator. A static GitHub Pages deployment needs an equivalent serverless proxy; it cannot make this protected Gemini request by itself.
+Notes
+- Development uses Vite. During local dev, the repo routes LLM calls through a proxy so secrets are not embedded in the browser bundle.
+- If you do not provide a Gemini key or the LLM is unreachable, Mirror falls back to the deterministic local simulator in `src/engine/`.
+
+Environment variables
+- `GEMINI_API_KEY` — primary LLM key (required for full LLM-first behavior)
+- `NVIDIA_API_KEY` / `VITE_NVIDIA_API_KEY` — optional GPU-backed inference keys if configured
+
+Security
+- Never commit API keys. Use the `.env` file locally and server-side secrets for any production proxy that calls Gemini.
 
 ---
 
-## 6. GitHub Pages Deployment
+## Deployment
 
-### Option A: Automated GitHub Actions Workflow (Included)
-The repository includes a ready-to-use GitHub Actions workflow at `.github/workflows/deploy.yml`:
-1. Push this repository to GitHub.
-2. In your GitHub repository settings, navigate to **Settings** → **Pages**.
-3. Under **Build and deployment** → **Source**, select **GitHub Actions**.
-4. Every push to the `main` branch will automatically build and deploy the app to `https://<your-username>.github.io/mirror/`.
+Static hosting
+- The app builds to a static bundle and can be hosted on GitHub Pages, Netlify, or any static host. If you rely on Gemini during runtime, you must deploy a small serverless proxy (e.g., a Netlify function or GitHub Actions-hosted server) that holds the key and forwards requests.
 
-### Option B: Manual Build & Preview
-```bash
-# Build production bundle
-npm run build
-
-# Preview production build locally
-npm run preview
-```
+CI/CD
+- The repository contains a sample GitHub Actions workflow for building and deploying to GitHub Pages. Adjust as required for your chosen host and secrets management.
 
 ---
 
-## 7. Project Structure
+## How we're doing what we're doing — design principles
 
-```
-Mirror/
-├── .github/workflows/deploy.yml      # Automated GitHub Pages CI/CD workflow
-├── public/
-│   ├── favicon.svg                   # Techtonic Mirror branded favicon
-│   └── unilever-logo.svg
-├── src/
-│   ├── data/
-│   │   ├── brands.json               # Mock Unilever brand portfolio metadata
-│   │   ├── historical_campaigns.json # 45+ realistic synthetic past campaigns
-│   │   ├── blocklist.json            # Brand safety, claim words & competitor filters
-│   │   ├── cultural_flags.json       # Regional & cultural sensitivity rule matrix
-│   │   ├── partnerships.json         # Active ambassador/event exclusivity constraints
-│   │   └── preloaded_strategies.json # 5 upstream Compass candidate strategies
-│   ├── engine/
-│   │   ├── types.ts                  # TypeScript data models and interfaces
-│   │   ├── similarityEngine.ts       # Multi-attribute k-NN nearest-neighbor matcher
-│   │   ├── simulationEngine.ts       # 14-day reach trajectories, sentiment & factor attribution
-│   │   ├── guardrailEngine.ts        # Brand safety, cultural compliance & IP scanner
-│   │   ├── recommendationEngine.ts   # Launch tier gating & stage-gate playbooks
-│   │   └── aiEnhancer.ts             # Gemini LLM-first assessment with local fallback
-│   ├── components/
-│   │   ├── common/                   # Header, Badge, Modal, LoadingOverlay
-│   │   ├── studio/                   # StrategyInputForm, SimulationResults, ReachVelocityChart,
-│   │   │                             # SentimentDonut, RiskGuardrailCard, ExplainabilityPanel,
-│   │   │                             # ActivationModal, OverrideModal
-│   │   ├── comparison/               # WhatIfArena (Side-by-side trade-off matrix)
-│   │   ├── calibration/              # CalibrationDashboard (Echo Learn feedback loop)
-│   │   ├── audit/                    # AuditTrail (Governance log & CSV/JSON export)
-│   │   └── modals/                   # AboutModal (Case context & mathematical foundations)
-│   ├── hooks/
-│   │   ├── useSimulation.ts          # Orchestrates simulation state & multi-stage progress
-│   │   └── useLocalStorage.ts        # In-browser persistent storage wrapper
-│   ├── App.tsx                       # Main application shell
-│   ├── index.css                     # Custom Tailwind theme tokens & glassmorphism
-│   └── main.tsx                      # Application root
-├── index.html
-├── package.json
-├── tailwind.config.js
-├── tsconfig.json
-├── vite.config.ts                    # Configured with relative base './' for static hosting
-└── README.md
-```
+- LLM-first but auditable: the LLM generates narratives and recommendations, while deterministic engines provide numbers and a verifiable fallback.
+- Explainability & governance: every override, manual acknowledgement, or activation decision is stored in the audit trail to support post-hoc reviews.
+- Minimal operational cost: client-side execution reduces infrastructure budgets; any required server component only holds API keys and proxies requests.
+- Safety-by-design: multi-agent guardrails with region-aware policy files reduce legal and cultural risk.
 
 ---
 
-## 8. Techtonic Season 8 Judging Criteria Alignment
+## Contributing
 
-- **Innovation & Viability**: Solves the critical "speed vs. risk" dilemma in real-time marketing without exposing Unilever to brand backlash.
-- **Explainability**: Every prediction is grounded in historical precedent with transparent factor attribution (+/- drivers).
-- **Enterprise Readiness**: Built-in multi-agent guardrails, risk override logging, and stage-gated activation protocols.
-- **Cost & Deployability**: $0 ongoing operational cost; instant client-side execution.
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feat/some-change`.
+3. Run tests and lints (if present).
+4. Open a pull request with a clear description and screenshots where applicable.
+
+Please respect the `src/data/` fixtures: if you add new historical campaigns for testing, include a short doc comment describing their provenance.
+
+---
+
+## License & acknowledgements
+
+This prototype is for internal Techtonic usage and demonstration purposes. Check with your legal team before any external release. A permissive OSS license (MIT) is recommended for public forks — add a `LICENSE` file if you want to open-source the project.
+
+Key acknowledgements
+- Built as a Techtonic Season 8 prototype demonstrating an end-to-end, client-side simulation and risk engine.
+
+---
+
+If you'd like, I can:
+- add a small `README` summary block to the top of `index.html` for quick context when viewing the static site;
+- create `.env.example` with the expected variables;
+- or generate a short CONTRIBUTING.md and SECURITY.md for secret handling guidance.
+
+Updated file: [README.md](README.md)
+

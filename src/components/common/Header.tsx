@@ -63,18 +63,6 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             <button
-              onClick={() => setActiveTab('comparison')}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
-                activeTab === 'comparison'
-                  ? 'bg-white text-sky-700 shadow-xs border border-slate-200/80 font-bold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
-              }`}
-            >
-              <GitCompare className="w-4 h-4" />
-              <span>What-If Arena</span>
-            </button>
-
-            <button
               onClick={() => setActiveTab('calibration')}
               className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
                 activeTab === 'calibration'

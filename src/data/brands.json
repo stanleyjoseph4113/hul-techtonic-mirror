@@ -1,94 +1,338 @@
 [
   {
-    "id": "rexona",
-    "name": "Rexona",
-    "alternateNames": ["Sure", "Degree", "Shield"],
-    "tagline": "It Won't Let You Down",
-    "category": "Deodorant & Antiperspirants",
-    "brandTone": ["High-energy", "Athletic", "Reliable", "Confident", "Uncompromising"],
-    "primaryAudience": "Athletes, sports fans, active Gen-Z/Millennials, commuters",
-    "typicalBudgetRange": { "min": 50000, "max": 1500000 },
-    "color": "#06B6D4",
+    "id": "axe",
+    "name": "Axe",
+    "tagline": "The power of a fragrance",
+    "category": "Personal Care",
+    "brandTone": ["Bold", "Confident", "Youthful", "Playful", "Masculine"],
+    "primaryAudience": "Young men, Gen-Z",
+    "typicalBudgetRange": { "min": 60000, "max": 1600000 },
+    "color": "#000000",
     "riskTolerance": "Medium-High",
-    "activePartnerships": [
-      "Official FIFA & Premier League Referee & Player Movement Sponsor (Global)",
-      "Global Marathon Series Partner"
-    ]
+    "activePartnerships": ["Various Gaming & Lifestyle Influencer Campaigns"]
+  },
+  {
+    "id": "cif",
+    "name": "Cif",
+    "tagline": "More than just clean",
+    "category": "Home Care",
+    "brandTone": ["Effective", "Reliable", "Practical", "Essential"],
+    "primaryAudience": "Homeowners, cleaners",
+    "typicalBudgetRange": { "min": 40000, "max": 1000000 },
+    "color": "#FEE100",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Sustainability initiatives for home cleaning"]
+  },
+  {
+    "id": "clear",
+    "name": "CLEAR",
+    "tagline": "Keep a clear head",
+    "category": "Personal Care",
+    "brandTone": ["Confident", "Fresh", "Professional", "Innovative"],
+    "primaryAudience": "Individuals seeking scalp and hair health",
+    "typicalBudgetRange": { "min": 50000, "max": 1200000 },
+    "color": "#2563EB",
+    "riskTolerance": "Medium",
+    "activePartnerships": ["Sports endorsements"]
+  },
+  {
+    "id": "closeup",
+    "name": "Closeup",
+    "tagline": "Giving people the confidence to get close",
+    "category": "Oral Care",
+    "brandTone": ["Bold", "Vibrant", "Social", "Youthful"],
+    "primaryAudience": "Young adults, social seekers",
+    "typicalBudgetRange": { "min": 30000, "max": 800000 },
+    "color": "#FF0000",
+    "riskTolerance": "Medium",
+    "activePartnerships": ["Social confidence initiatives"]
+  },
+  {
+    "id": "comfort",
+    "name": "Comfort",
+    "tagline": "Next level fresh",
+    "category": "Home Care",
+    "brandTone": ["Soft", "Caring", "Fresh", "Premium"],
+    "primaryAudience": "Households, garment care enthusiasts",
+    "typicalBudgetRange": { "min": 45000, "max": 900000 },
+    "color": "#A78BFA",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Fashion and sustainability collaborations"]
+  },
+  {
+    "id": "dermalogica",
+    "name": "Dermalogica",
+    "tagline": "Professional-grade skincare",
+    "category": "Beauty & Wellbeing",
+    "brandTone": ["Scientific", "Expert", "Serious", "Results-driven"],
+    "primaryAudience": "Skincare professionals, beauty enthusiasts",
+    "typicalBudgetRange": { "min": 70000, "max": 1400000 },
+    "color": "#FFFFFF",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Professional salon networks"]
+  },
+  {
+    "id": "domestos",
+    "name": "Domestos",
+    "tagline": "Unstoppable",
+    "category": "Home Care",
+    "brandTone": ["Strong", "Protective", "Assertive", "Direct"],
+    "primaryAudience": "Hygiene-focused households",
+    "typicalBudgetRange": { "min": 40000, "max": 950000 },
+    "color": "#005EB8",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Global hygiene/sanitation programmes"]
   },
   {
     "id": "dove",
     "name": "Dove",
-    "tagline": "Real Beauty",
+    "tagline": "Change beauty into a positive experience",
     "category": "Personal Care & Beauty",
-    "brandTone": ["Empathetic", "Authentic", "Inclusive", "Nurturing", "Vulnerable"],
-    "primaryAudience": "Women, young adults, advocates for self-esteem and un-retouched beauty",
+    "brandTone": ["Empathetic", "Authentic", "Inclusive", "Nurturing"],
+    "primaryAudience": "Women, young adults",
     "typicalBudgetRange": { "min": 100000, "max": 2000000 },
     "color": "#38BDF8",
     "riskTolerance": "Low",
-    "activePartnerships": [
-      "Dove Self-Esteem Project (UNICEF & Global Schools Alliance)",
-      "No Digital Distortion Pledge"
-    ]
+    "activePartnerships": ["Dove Self-Esteem Project"]
+  },
+  {
+    "id": "dove-men-care",
+    "name": "Dove Men+Care",
+    "tagline": "Care makes all the difference",
+    "category": "Personal Care",
+    "brandTone": ["Strength", "Care", "Reliable", "Gentle"],
+    "primaryAudience": "Men prioritizing personal care",
+    "typicalBudgetRange": { "min": 50000, "max": 1100000 },
+    "color": "#003366",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Fatherhood advocacy initiatives"]
+  },
+  {
+    "id": "hellmanns",
+    "name": "Hellmann's",
+    "tagline": "Make Taste, Not Waste",
+    "category": "Food & Refreshment",
+    "brandTone": ["Witty", "Resourceful", "Approachable"],
+    "primaryAudience": "Home cooks, eco-conscious foodies",
+    "typicalBudgetRange": { "min": 50000, "max": 1500000 },
+    "color": "#EAB308",
+    "riskTolerance": "Medium",
+    "activePartnerships": ["Too Good To Go Coalition"]
+  },
+  {
+    "id": "horlicks",
+    "name": "Horlicks",
+    "tagline": "Taller, Stronger, Sharper",
+    "category": "Nutrition",
+    "brandTone": ["Health-focused", "Nurturing", "Traditional", "Trustworthy"],
+    "primaryAudience": "Growing families, children",
+    "typicalBudgetRange": { "min": 35000, "max": 800000 },
+    "color": "#D97706",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Nutrition awareness campaigns"]
   },
   {
     "id": "knorr",
     "name": "Knorr",
     "tagline": "Eat for Good",
     "category": "Nutrition & Condiments",
-    "brandTone": ["Warm", "Culinary-savvy", "Accessible", "Wholesome", "Culturally resonant"],
-    "primaryAudience": "Home cooks, busy parents, culinary enthusiasts, sustainable food seekers",
+    "brandTone": ["Warm", "Culinary-savvy", "Wholesome"],
+    "primaryAudience": "Home cooks, busy parents",
     "typicalBudgetRange": { "min": 40000, "max": 1200000 },
     "color": "#10B981",
     "riskTolerance": "Medium",
-    "activePartnerships": [
-      "WWF Future 50 Foods Initiative",
-      "MasterChef Regional Licensing (UK & LatAm)"
-    ]
-  },
-  {
-    "id": "magnum",
-    "name": "Magnum",
-    "tagline": "Pleasure is Diverse",
-    "category": "Ice Cream & Indulgence",
-    "brandTone": ["Sensual", "Luxurious", "Bold", "Fashion-forward", "Hedonistic"],
-    "primaryAudience": "Urban tastemakers, fashion lovers, indulgence seekers 20-40",
-    "typicalBudgetRange": { "min": 80000, "max": 1800000 },
-    "color": "#F59E0B",
-    "riskTolerance": "Medium-High",
-    "activePartnerships": [
-      "Cannes Film Festival Official Ice Cream Partner",
-      "Rainforest Alliance Cocoa Exclusivity"
-    ]
-  },
-  {
-    "id": "hellmanns",
-    "name": "Hellmann's",
-    "alternateNames": ["Best Foods"],
-    "tagline": "Make Taste, Not Waste",
-    "category": "Dressings & Condiments",
-    "brandTone": ["Witty", "Resourceful", "Action-oriented", "Approachable", "Food-positive"],
-    "primaryAudience": "Eco-conscious foodies, household meal planners, sports snackers",
-    "typicalBudgetRange": { "min": 50000, "max": 1500000 },
-    "color": "#EAB308",
-    "riskTolerance": "Medium",
-    "activePartnerships": [
-      "NFL Super Bowl Official Condiment Partner (US)",
-      "Too Good To Go Anti-Food Waste Coalition (Europe)"
-    ]
+    "activePartnerships": ["WWF Future 50 Foods"]
   },
   {
     "id": "lifebuoy",
     "name": "Lifebuoy",
     "tagline": "100% Better Germ Protection",
     "category": "Hygiene & Skin Cleansing",
-    "brandTone": ["Protective", "Purpose-driven", "Direct", "Reassuring", "Community-centric"],
-    "primaryAudience": "Mothers, school communities, healthcare advocates across South Asia, Africa & SEA",
+    "brandTone": ["Protective", "Purpose-driven", "Reassuring"],
+    "primaryAudience": "Mothers, school communities",
     "typicalBudgetRange": { "min": 30000, "max": 900000 },
     "color": "#EF4444",
     "riskTolerance": "Low-Medium",
-    "activePartnerships": [
-      "Global Handwashing Day (Gavi & USAID Coalition)",
-      "Doctor Association Endorsements (India, Indonesia)"
-    ]
+    "activePartnerships": ["Global Handwashing Day"]
+  },
+  {
+    "id": "liquid-iv",
+    "name": "Liquid I.V.",
+    "tagline": "Hydration multiplier",
+    "category": "Wellness/Nutrition",
+    "brandTone": ["Modern", "Energetic", "Functional", "Scientific"],
+    "primaryAudience": "Active individuals, athletes",
+    "typicalBudgetRange": { "min": 40000, "max": 1000000 },
+    "color": "#60A5FA",
+    "riskTolerance": "Medium",
+    "activePartnerships": ["Athletic performance sponsorships"]
+  },
+  {
+    "id": "lux",
+    "name": "LUX",
+    "tagline": "Empowering women to find strength",
+    "category": "Personal Care & Beauty",
+    "brandTone": ["Sensual", "Elegant", "Luxurious", "Empowering"],
+    "primaryAudience": "Women seeking self-expression",
+    "typicalBudgetRange": { "min": 50000, "max": 1200000 },
+    "color": "#F472B6",
+    "riskTolerance": "Medium",
+    "activePartnerships": ["Women's empowerment initiatives"]
+  },
+  {
+    "id": "nexxus",
+    "name": "Nexxus",
+    "tagline": "From New York salon practice",
+    "category": "Personal Care",
+    "brandTone": ["Sophisticated", "Professional", "Scientific", "Premium"],
+    "primaryAudience": "Hair care enthusiasts",
+    "typicalBudgetRange": { "min": 40000, "max": 900000 },
+    "color": "#4B5563",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Professional stylist endorsements"]
+  },
+  {
+    "id": "nutrafol",
+    "name": "Nutrafol",
+    "tagline": "The No.1 dermatologist-recommended hair growth supplement",
+    "category": "Wellness/Nutrition",
+    "brandTone": ["Expert", "Clinical", "Trustworthy", "Focused"],
+    "primaryAudience": "Individuals concerned with hair health",
+    "typicalBudgetRange": { "min": 50000, "max": 1100000 },
+    "color": "#9CA3AF",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Dermatology networks"]
+  },
+  {
+    "id": "omo",
+    "name": "OMO",
+    "tagline": "Dirt Is Good",
+    "category": "Home Care",
+    "brandTone": ["Playful", "Progressive", "Human-centric"],
+    "primaryAudience": "Parents, families",
+    "typicalBudgetRange": { "min": 50000, "max": 1300000 },
+    "color": "#F59E0B",
+    "riskTolerance": "Low-Medium",
+    "activePartnerships": ["Educational child development programs"]
+  },
+  {
+    "id": "paulas-choice",
+    "name": "Paula's Choice",
+    "tagline": "Beauty begins with truth",
+    "category": "Skincare",
+    "brandTone": ["Transparent", "Educational", "Scientific", "Honest"],
+    "primaryAudience": "Ingredient-conscious consumers",
+    "typicalBudgetRange": { "min": 60000, "max": 1300000 },
+    "color": "#1F2937",
+    "riskTolerance": "Medium",
+    "activePartnerships": ["Skincare science research"]
+  },
+  {
+    "id": "pepsodent",
+    "name": "Pepsodent",
+    "tagline": "Your family's ultimate oral care protector",
+    "category": "Oral Care",
+    "brandTone": ["Protective", "Reliable", "Family-focused"],
+    "primaryAudience": "Families",
+    "typicalBudgetRange": { "min": 30000, "max": 800000 },
+    "color": "#00AEEF",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Dental health outreach"]
+  },
+  {
+    "id": "ponds",
+    "name": "POND'S",
+    "tagline": "Miracles happen",
+    "category": "Skincare",
+    "brandTone": ["Expert", "Caring", "Classic", "Effective"],
+    "primaryAudience": "Women of all ages",
+    "typicalBudgetRange": { "min": 40000, "max": 1000000 },
+    "color": "#818CF8",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Skin research institutions"]
+  },
+  {
+    "id": "radiant",
+    "name": "Radiant",
+    "tagline": "A bolt of brilliance can start with everyday laundry",
+    "category": "Home Care",
+    "brandTone": ["Bright", "Positive", "Energetic", "Efficient"],
+    "primaryAudience": "Household shoppers",
+    "typicalBudgetRange": { "min": 30000, "max": 800000 },
+    "color": "#FBBF24",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Laundry efficacy programs"]
+  },
+  {
+    "id": "rexona",
+    "name": "Rexona",
+    "tagline": "It won't let you down",
+    "category": "Deodorant & Antiperspirants",
+    "brandTone": ["High-energy", "Athletic", "Confident"],
+    "primaryAudience": "Athletes, active individuals",
+    "typicalBudgetRange": { "min": 50000, "max": 1500000 },
+    "color": "#06B6D4",
+    "riskTolerance": "Medium-High",
+    "activePartnerships": ["Global sports partnerships"]
+  },
+  {
+    "id": "sunlight",
+    "name": "Sunlight",
+    "tagline": "Made for more",
+    "category": "Home Care",
+    "brandTone": ["Versatile", "Reliable", "Accessible", "Cheerful"],
+    "primaryAudience": "Families on a budget",
+    "typicalBudgetRange": { "min": 30000, "max": 900000 },
+    "color": "#FDE047",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Community support initiatives"]
+  },
+  {
+    "id": "sunsilk",
+    "name": "Sunsilk",
+    "tagline": "Opening up possibilities for girls everywhere",
+    "category": "Personal Care",
+    "brandTone": ["Optimistic", "Colorful", "Youthful", "Empowering"],
+    "primaryAudience": "Young women/girls",
+    "typicalBudgetRange": { "min": 40000, "max": 1000000 },
+    "color": "#FF8C00",
+    "riskTolerance": "Medium",
+    "activePartnerships": ["Girl-power mentorship programs"]
+  },
+  {
+    "id": "surf",
+    "name": "Surf",
+    "tagline": "Smells that good",
+    "category": "Home Care",
+    "brandTone": ["Fragrant", "Joyful", "Fun", "Approachable"],
+    "primaryAudience": "Everyday households",
+    "typicalBudgetRange": { "min": 35000, "max": 850000 },
+    "color": "#60A5FA",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Scent-focused campaigns"]
+  },
+  {
+    "id": "tresemme",
+    "name": "TRESemmé",
+    "tagline": "Used by professionals",
+    "category": "Personal Care",
+    "brandTone": ["Stylish", "Confident", "Professional", "Edgy"],
+    "primaryAudience": "Fashion-conscious hair care users",
+    "typicalBudgetRange": { "min": 50000, "max": 1200000 },
+    "color": "#000000",
+    "riskTolerance": "Medium",
+    "activePartnerships": ["Fashion Week sponsorships"]
+  },
+  {
+    "id": "vaseline",
+    "name": "Vaseline",
+    "tagline": "Everyone, everywhere deserves healthy, beautiful skin",
+    "category": "Skincare",
+    "brandTone": ["Caring", "Essential", "Healing", "Trustworthy"],
+    "primaryAudience": "General public/families",
+    "typicalBudgetRange": { "min": 40000, "max": 1100000 },
+    "color": "#0056B3",
+    "riskTolerance": "Low",
+    "activePartnerships": ["Healing skin initiatives"]
   }
 ]
