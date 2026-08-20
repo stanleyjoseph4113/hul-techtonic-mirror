@@ -1,0 +1,62 @@
+[
+  {
+    "id": "cult-001",
+    "market": "Germany",
+    "triggerCondition": "comparative_or_aggressive",
+    "keywords": ["beats", "superior to", "better than", "kills 10x more", "pharmacy brand"],
+    "severity": "high",
+    "title": "Strict German Comparative Advertising Act (UWG § 6)",
+    "explanation": "German law strictly restricts naming or degrading competitor products without certified independent laboratory testing certificates published simultaneously.",
+    "recommendation": "Switch creative angle to direct consumer benefit without explicit competitor comparison."
+  },
+  {
+    "id": "cult-002",
+    "market": "Indonesia",
+    "triggerCondition": "ramadan_timing_or_halal",
+    "keywords": ["fasting", "ramadan", "iftar", "snack", "daytime"],
+    "severity": "medium",
+    "title": "Indonesian Ramadan Broadcast & Halal Protocol",
+    "explanation": "Depicting daytime eating during Ramadan fasting hours is culturally controversial in Indonesia; food content must be framed around Iftar (sunset) or Sahur (pre-dawn) and display MUI Halal certification.",
+    "recommendation": "Ensure all food imagery is clearly captioned with Iftar timings and Halal verification stamp."
+  },
+  {
+    "id": "cult-003",
+    "market": "US",
+    "triggerCondition": "influencer_disclosure",
+    "keywords": ["influencer", "creator", "prank", "trick", "secret"],
+    "severity": "medium",
+    "title": "US FTC Influencer Endorsement Guides Compliance",
+    "explanation": "The FTC strictly penalizes deceptive format advertising, paid creator stunts, and unlabelled brand integrations with fines up to $50,120 per violation.",
+    "recommendation": "Mandate upfront #Ad/#Sponsored visual text disclosures in first 3 seconds of creator video."
+  },
+  {
+    "id": "cult-004",
+    "market": "UK",
+    "triggerCondition": "green_claim",
+    "keywords": ["eco friendly", "zero waste", "green", "carbon neutral", "sustainable"],
+    "severity": "high",
+    "title": "UK CMA Green Claims Code & ASA Environmental Guidance",
+    "explanation": "UK Advertising Standards Authority bans broad environmental claims ('sustainable', 'eco-friendly') unless accompanied by clear life-cycle breakdown data in the same asset.",
+    "recommendation": "Specify precise metric (e.g. '100% recycled bottle plastic, excluding cap') instead of generalized green slogans."
+  },
+  {
+    "id": "cult-005",
+    "market": "India",
+    "triggerCondition": "religious_or_dietary",
+    "keywords": ["beef", "pork", "holy", "temple", "ritual", "sacred"],
+    "severity": "high",
+    "title": "Indian Cultural Dietary & Faith Nuance",
+    "explanation": "Dietary sensitivities regarding vegetarianism and religious symbols require stringent review by local brand counsel to avoid consumer boycott calls.",
+    "recommendation": "Validate Green Dot vegetarian certification marks and ensure script avoids religious iconography."
+  },
+  {
+    "id": "cult-006",
+    "market": "Brazil",
+    "triggerCondition": "sensual_or_body",
+    "keywords": ["provocative", "bikini", "sensual", "naked", "erotic"],
+    "severity": "medium",
+    "title": "CONAR Brazilian Self-Regulation Advertising Code",
+    "explanation": "CONAR enforces strict guidelines on hyper-sexualization and beauty stereotyping in public broadcast and social feeds.",
+    "recommendation": "Emphasize personal empowerment, sensory indulgence, and diversity over objectifying aesthetics."
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "strat-rexona-referee",
+    "title": "Rexona 'Armband Pressure' Viral Reactive",
+    "source": "Compass Agent (Upstream Cultural Pulse)",
+    "brandId": "rexona",
+    "strategyType": "organic_social_reactive",
+    "markets": ["UK", "Brazil", "Global"],
+    "budget": 45000,
+    "channels": ["X", "TikTok", "Instagram"],
+    "timelineUrgency": "immediate",
+    "creativeAngle": "Viral clip of tense football referee sweating under pressure with Rexona logo visible on armband. Caption: 'Under maximum pressure? 72H protection won't let you down.'",
+    "rationale": "High organic momentum with over 2.4M live impressions in the last 2 hours. Fast, low-cost reactive play to capitalize on earned media."
+  },
+  {
+    "id": "strat-dove-ai-beauty",
+    "title": "Dove 'Code of Real Beauty' Anti-AI Filter Campaign",
+    "source": "Compass Agent (Upstream Cultural Pulse)",
+    "brandId": "dove",
+    "strategyType": "influencer_partnership",
+    "markets": ["US", "UK"],
+    "budget": 280000,
+    "channels": ["Instagram", "TikTok", "OOH"],
+    "timelineUrgency": "one_week",
+    "creativeAngle": "Partnership with 25 authentic beauty creators pledging zero digital retouching and demonstrating how AI image generators create distorted beauty standards.",
+    "rationale": "Directly reinforces Dove's 20-year Real Beauty equity amidst mounting consumer anxiety over generative AI aesthetics."
+  },
+  {
+    "id": "strat-knorr-ramadan-iftar",
+    "title": "Knorr Ramadan '15-Minute Iftar Nourish' Hacks",
+    "source": "Compass Agent (Upstream Cultural Pulse)",
+    "brandId": "knorr",
+    "strategyType": "organic_social_reactive",
+    "markets": ["Indonesia", "India"],
+    "budget": 65000,
+    "channels": ["TikTok", "Instagram", "YouTube"],
+    "timelineUrgency": "immediate",
+    "creativeAngle": "High-speed video series with local creators creating comforting, nutrient-dense Iftar soups and stews in under 15 minutes during fasting month.",
+    "rationale": "Peak Ramadan grocery search volume (+340% for quick meal ideas) makes this a high-conversion, low-risk seasonal opportunity."
+  },
+  {
+    "id": "strat-magnum-cannes-pop",
+    "title": "Magnum Couture Dipping Bar Street Pop-Up",
+    "source": "Compass Agent (Upstream Cultural Pulse)",
+    "brandId": "magnum",
+    "strategyType": "influencer_partnership",
+    "markets": ["Global", "UK", "Germany"],
+    "budget": 420000,
+    "channels": ["Instagram", "TikTok", "OOH"],
+    "timelineUrgency": "one_week",
+    "creativeAngle": "Luxury street pop-up in high-fashion districts offering bespoke gold leaf and ruby chocolate dipped Magnum bars co-hosted by fashion week creators.",
+    "rationale": "Amplifies Magnum's premium indulgence positioning and drives high-aesthetic user-generated content (UGC) ripple across social feeds."
+  },
+  {
+    "id": "strat-hellmanns-game-day",
+    "title": "Hellmann's 'Leftover Playbook' Super Bowl Reactive",
+    "source": "Compass Agent (Upstream Cultural Pulse)",
+    "brandId": "hellmanns",
+    "strategyType": "paid_amplification",
+    "markets": ["US"],
+    "budget": 650000,
+    "channels": ["TV", "TikTok", "X", "YouTube"],
+    "timelineUrgency": "one_week",
+    "creativeAngle": "Humorous multi-channel push showing game day hosts turning cold buffalo wings and stale pizza crusts into gourmet dips with Hellmann's mayo.",
+    "rationale": "Post-game day food waste is at an annual peak. Ties national sports excitement directly to Hellmann's 'Make Taste, Not Waste' mission."
+  }
+]

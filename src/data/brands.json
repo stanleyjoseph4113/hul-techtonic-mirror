@@ -1,0 +1,94 @@
+[
+  {
+    "id": "rexona",
+    "name": "Rexona",
+    "alternateNames": ["Sure", "Degree", "Shield"],
+    "tagline": "It Won't Let You Down",
+    "category": "Deodorant & Antiperspirants",
+    "brandTone": ["High-energy", "Athletic", "Reliable", "Confident", "Uncompromising"],
+    "primaryAudience": "Athletes, sports fans, active Gen-Z/Millennials, commuters",
+    "typicalBudgetRange": { "min": 50000, "max": 1500000 },
+    "color": "#06B6D4",
+    "riskTolerance": "Medium-High",
+    "activePartnerships": [
+      "Official FIFA & Premier League Referee & Player Movement Sponsor (Global)",
+      "Global Marathon Series Partner"
+    ]
+  },
+  {
+    "id": "dove",
+    "name": "Dove",
+    "tagline": "Real Beauty",
+    "category": "Personal Care & Beauty",
+    "brandTone": ["Empathetic", "Authentic", "Inclusive", "Nurturing", "Vulnerable"],
+    "primaryAudience": "Women, young adults, advocates for self-esteem and un-retouched beauty",
+    "typicalBudgetRange": { "min": 100000, "max": 2000000 },
+    "color": "#38BDF8",
+    "riskTolerance": "Low",
+    "activePartnerships": [
+      "Dove Self-Esteem Project (UNICEF & Global Schools Alliance)",
+      "No Digital Distortion Pledge"
+    ]
+  },
+  {
+    "id": "knorr",
+    "name": "Knorr",
+    "tagline": "Eat for Good",
+    "category": "Nutrition & Condiments",
+    "brandTone": ["Warm", "Culinary-savvy", "Accessible", "Wholesome", "Culturally resonant"],
+    "primaryAudience": "Home cooks, busy parents, culinary enthusiasts, sustainable food seekers",
+    "typicalBudgetRange": { "min": 40000, "max": 1200000 },
+    "color": "#10B981",
+    "riskTolerance": "Medium",
+    "activePartnerships": [
+      "WWF Future 50 Foods Initiative",
+      "MasterChef Regional Licensing (UK & LatAm)"
+    ]
+  },
+  {
+    "id": "magnum",
+    "name": "Magnum",
+    "tagline": "Pleasure is Diverse",
+    "category": "Ice Cream & Indulgence",
+    "brandTone": ["Sensual", "Luxurious", "Bold", "Fashion-forward", "Hedonistic"],
+    "primaryAudience": "Urban tastemakers, fashion lovers, indulgence seekers 20-40",
+    "typicalBudgetRange": { "min": 80000, "max": 1800000 },
+    "color": "#F59E0B",
+    "riskTolerance": "Medium-High",
+    "activePartnerships": [
+      "Cannes Film Festival Official Ice Cream Partner",
+      "Rainforest Alliance Cocoa Exclusivity"
+    ]
+  },
+  {
+    "id": "hellmanns",
+    "name": "Hellmann's",
+    "alternateNames": ["Best Foods"],
+    "tagline": "Make Taste, Not Waste",
+    "category": "Dressings & Condiments",
+    "brandTone": ["Witty", "Resourceful", "Action-oriented", "Approachable", "Food-positive"],
+    "primaryAudience": "Eco-conscious foodies, household meal planners, sports snackers",
+    "typicalBudgetRange": { "min": 50000, "max": 1500000 },
+    "color": "#EAB308",
+    "riskTolerance": "Medium",
+    "activePartnerships": [
+      "NFL Super Bowl Official Condiment Partner (US)",
+      "Too Good To Go Anti-Food Waste Coalition (Europe)"
+    ]
+  },
+  {
+    "id": "lifebuoy",
+    "name": "Lifebuoy",
+    "tagline": "100% Better Germ Protection",
+    "category": "Hygiene & Skin Cleansing",
+    "brandTone": ["Protective", "Purpose-driven", "Direct", "Reassuring", "Community-centric"],
+    "primaryAudience": "Mothers, school communities, healthcare advocates across South Asia, Africa & SEA",
+    "typicalBudgetRange": { "min": 30000, "max": 900000 },
+    "color": "#EF4444",
+    "riskTolerance": "Low-Medium",
+    "activePartnerships": [
+      "Global Handwashing Day (Gavi & USAID Coalition)",
+      "Doctor Association Endorsements (India, Indonesia)"
+    ]
+  }
+]

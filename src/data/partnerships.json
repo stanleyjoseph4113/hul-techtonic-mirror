@@ -1,0 +1,44 @@
+[
+  {
+    "brandId": "rexona",
+    "partner": "FIFA & Premier League Referees",
+    "restrictedKeywords": ["uefa champions league official partner", "olympic rings", "nike swoosh"],
+    "rule": "Cannot claim official UEFA or Olympic sponsorship without separate IP rights license. Premier League referee imagery must adhere to official kit partner guidelines.",
+    "severity": "high"
+  },
+  {
+    "brandId": "dove",
+    "partner": "Dove Real Beauty Charter & No Digital Distortion Pledge",
+    "restrictedKeywords": ["ai model", "synthetic face", "face filter", "airbrush", "generative ai beauty", "retouch"],
+    "rule": "Dove has committed globally never to use AI-generated or digitally altered women in brand imagery. Using AI models violates the Dove Global Real Beauty Charter.",
+    "severity": "high"
+  },
+  {
+    "brandId": "knorr",
+    "partner": "WWF Future 50 Foods",
+    "restrictedKeywords": ["beef tallow", "unfiltered palm oil", "endangered species", "factory farming"],
+    "rule": "Knorr's global sustainability pledge with WWF prohibits featuring high-emissions red meat in campaigns carrying the 'Eat for Good' or 'Future 50' mark.",
+    "severity": "medium"
+  },
+  {
+    "brandId": "magnum",
+    "partner": "Cannes Film Festival & Rainforest Alliance",
+    "restrictedKeywords": ["super bowl official", "unverified cocoa", "cheap chocolate"],
+    "rule": "Magnum's luxury brand positioning requires Rainforest Alliance certification on all cocoa references and prohibits unauthorized ambush marketing around non-partnered major sporting events.",
+    "severity": "medium"
+  },
+  {
+    "brandId": "hellmanns",
+    "partner": "NFL Super Bowl & Too Good To Go",
+    "restrictedKeywords": ["olympic official condiment", "fifa official mayo"],
+    "rule": "Hellmann's holds official NFL Super Bowl partner status in the US; unauthorized use of Olympic or FIFA marks violates sports federation IP rights.",
+    "severity": "medium"
+  },
+  {
+    "brandId": "lifebuoy",
+    "partner": "Global Handwashing Coalition & USAID",
+    "restrictedKeywords": ["untested vaccine", "cure for covid", "replaces antibiotics"],
+    "rule": "Public health partnerships require all medical and germ-kill claims to match standard soap & surfactant testing protocols without implying prescription medicinal efficacy.",
+    "severity": "high"
+  }
+]

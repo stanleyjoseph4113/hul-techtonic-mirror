@@ -1,0 +1,29 @@
+{
+  "competitors": [
+    { "term": "nivea", "brand": "Rexona/Dove", "severity": "high", "rule": "Direct competitor brand name mention without comparative legal clearance." },
+    { "term": "old spice", "brand": "Rexona", "severity": "high", "rule": "Direct P&G competitor brand name mention without legal clearance." },
+    { "term": "secret", "brand": "Rexona", "severity": "medium", "rule": "Potential competitor deodorant brand name conflict." },
+    { "term": "heinz", "brand": "Hellmann's/Knorr", "severity": "high", "rule": "Direct Kraft Heinz competitor brand reference." },
+    { "term": "nestle", "brand": "Knorr/Magnum", "severity": "high", "rule": "Direct competitor conglomerate brand mention." },
+    { "term": "maggi", "brand": "Knorr", "severity": "high", "rule": "Direct Nestlé Maggi bouillon/seasoning competitor reference." },
+    { "term": "haagen dazs", "brand": "Magnum", "severity": "high", "rule": "Direct General Mills/Froneri luxury ice cream competitor mention." },
+    { "term": "ben & jerry's", "brand": "Magnum", "severity": "medium", "rule": "Internal brand cross-conflict without portfolio alignment." },
+    { "term": "dettol", "brand": "Lifebuoy", "severity": "high", "rule": "Direct Reckitt Dettol antiseptic competitor mention." },
+    { "term": "pantene", "brand": "Dove", "severity": "high", "rule": "Direct P&G hair care competitor mention." },
+    { "term": "head & shoulders", "brand": "Dove", "severity": "high", "rule": "Direct P&G competitor mention." }
+  ],
+  "unsubstantiatedClaims": [
+    { "pattern": "100% cure", "severity": "high", "rule": "Absolute medical/cure claims violate global ASA & FTC health regulations." },
+    { "pattern": "cure.*(disease|infection|virus|covid)", "severity": "high", "rule": "Therapeutic medical claim requires clinical trial drug registration." },
+    { "pattern": "miracle.*(result|transformation|cure)", "severity": "medium", "rule": "Superlative 'miracle' wording triggers advertising standards watchdog flags." },
+    { "pattern": "guaranteed.*(weight|slim|cure|anti-aging)", "severity": "high", "rule": "Unqualified efficacy guarantees breach Unilever Global Advertising Code." },
+    { "pattern": "zero carbon|100% carbon free|completely eco-friendly", "severity": "high", "rule": "Absolute green claims without verified third-party ISO certificate breach EU Green Claims Directive." },
+    { "pattern": "chemical free|100% toxin free", "severity": "medium", "rule": "'Chemical-free' is scientifically invalid and flagged by consumer protection agencies." }
+  ],
+  "sensitiveKeywords": [
+    { "term": "boycott", "severity": "high", "rule": "Activist boycott framing requires Legal & Corporate Affairs sign-off." },
+    { "term": "election|political party|candidate", "severity": "high", "rule": "Partisan political association strictly prohibited by Unilever Global Policy." },
+    { "term": "fat shaming|ugly|skinny", "severity": "high", "rule": "Pejorative body aesthetics language directly breaches Dove Real Beauty Charter." },
+    { "term": "illegal|pirated|bootleg", "severity": "medium", "rule": "Association with illicit or unauthorized broadcast material." }
+  ]
+}
