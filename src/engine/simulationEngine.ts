@@ -352,8 +352,8 @@ export function runSimulation(strategy: CandidateStrategy): SimulationResult {
       max: Number((expectedConversion * 1.3).toFixed(1))
     },
     backlashRisk: backlashProbability,
-    backlashProbability,
-    backlashRiskLevel,
+    backlashProbability: backlashProbability,
+    backlashRiskLevel: backlashRiskLevel,
     estimatedROI,
     costPerEngagedUser,
     guardrailFlags,
