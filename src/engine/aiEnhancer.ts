@@ -158,16 +158,31 @@ export async function runLLMFirstSimulation(strategy: CandidateStrategy): Promis
       }),
       signal: controller.signal
     });
-    const payload = await upstream.json() as { responseId?: string; candidates?: { finishReason?: string; content?: { parts?: { text?: string }[] } }[]; error?: { message?: string } | string };
-    const errorMessage = typeof payload.error === 'string' ? payload.error : payload.error?.message;
+    const rawText = await upstream.text();
+    let payload: { responseId?: string; candidates?: { finishReason?: string; content?: { parts?: { text?: string }[] } }[]; error?: { message?: string } | string } | null = null;
+
+    if (rawText.trim()) {
+      const looksLikeHtml = rawText.trim().startsWith('<');
+      if (looksLikeHtml) {
+        payload = { error: 'Gemini endpoint returned HTML instead of JSON. This usually means the app is being served without the production proxy.' };
+      } else {
+        try {
+          payload = JSON.parse(rawText) as typeof payload;
+        } catch {
+          payload = { error: rawText.slice(0, 200) || 'Gemini returned a non-JSON response.' };
+        }
+      }
+    }
+
+    const errorMessage = typeof payload?.error === 'string' ? payload.error : payload?.error?.message;
     if (!upstream.ok) return { simulation: null, failureReason: `Gemini API ${upstream.status}: ${errorMessage || 'Request failed.'}` };
-    const finishReason = payload.candidates?.[0]?.finishReason;
+    const finishReason = payload?.candidates?.[0]?.finishReason;
     if (finishReason === 'MAX_TOKENS') return { simulation: null, failureReason: 'Gemini response was truncated at its output limit.' };
-    const content = payload.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('');
+    const content = payload?.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('');
     if (!content) return { simulation: null, failureReason: 'Gemini returned an empty completion.' };
     const result = buildResult(strategy, JSON.parse(content));
     if (!result) return { simulation: null, failureReason: 'Gemini completion did not contain a valid campaign result.' };
-    result.aiTrace = { mode: 'llm_first', model: MODEL, sourceFiles: SOURCE_FILES, responseId: payload.responseId };
+    result.aiTrace = { mode: 'llm_first', model: MODEL, sourceFiles: SOURCE_FILES, responseId: payload?.responseId };
     const cache = readCache(); cache[key] = result; writeCache(cache);
     return { simulation: result };
   } catch (error) {
