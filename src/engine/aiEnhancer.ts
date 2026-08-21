@@ -7,7 +7,7 @@ import partnerships from '../data/partnerships.json';
 import preloadedStrategies from '../data/preloaded_strategies.json';
 
 const CACHE_KEY = 'mirror_llm_first_results_v1';
-const MODEL = 'gemini-2.5-flash';
+const MODEL = 'gemini-3.6-flash';
 const REQUEST_TIMEOUT_MS = 30_000;
 const SOURCE_FILES = ['brands.json', 'historical_campaigns.json', 'blocklist.json', 'cultural_flags.json', 'partnerships.json', 'preloaded_strategies.json'];
 // Gemini structured output prevents the model from returning prose or malformed JSON.
